@@ -1,0 +1,21 @@
+.btn {
+  &-icon {
+    position: relative;
+
+    & > svg {
+      @apply h-full w-full;
+    }
+
+    & path {
+      @apply fill-neutral-300;
+    }
+
+    &:hover path {
+      @apply fill-neutral-100;
+    }
+
+    &:disabled path {
+      @apply fill-neutral-600;
+    }
+  }
+}
