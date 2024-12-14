@@ -1,0 +1,57 @@
+{
+  "name": "flickstore",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:run": "vitest",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.0.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.54.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "globals": "^15.11.0",
+    "jsdom": "^23.0.0",
+    "postcss": "^8.4.49",
+    "prettier": "^3.1.0",
+    "sass-embedded": "^1.81.0",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-svgr": "^4.3.0",
+    "vitest": "^0.34.6"
+  },
+  "prettier": {
+    "semi": true,
+    "tabWidth": 2,
+    "singleQuote": false,
+    "trailingComma": "all"
+  }
+}
