@@ -61,7 +61,7 @@ const ErrorPage = () => (
         <img
           src={bgSmJpg}
           alt=""
-          className="fixed h-full w-full object-cover"
+          className="animate-moveBg fixed h-full w-full object-cover"
         />
       </picture>
     </div>
