@@ -8,7 +8,9 @@ interface Props {
 const Search = ({ onClose = () => {} }: Props) => {
   const searchBoxRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
   const [focused, setFocused] = useState(false);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
@@ -78,6 +80,8 @@ const Search = ({ onClose = () => {} }: Props) => {
               className="w-full bg-transparent text-xl font-bold text-neutral-200 placeholder-neutral-400 outline-none"
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
+              onChange={(e) => setQuery(e.target.value)}
+              value={query}
             />
           </label>
         </form>

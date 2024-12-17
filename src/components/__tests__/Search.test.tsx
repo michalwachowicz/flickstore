@@ -39,4 +39,16 @@ describe("<Search />", () => {
     });
     expect(fn).toHaveBeenCalledTimes(1);
   });
+
+  it("changes input value on type", async () => {
+    render(<Search />);
+    expect(screen.getByRole("textbox")).toHaveValue("");
+
+    const user = userEvent.setup();
+    await act(async () => {
+      await user.keyboard("test");
+    });
+
+    expect(screen.getByRole("textbox")).toHaveValue("test");
+  });
 });
