@@ -56,6 +56,7 @@ describe("moviesManager", () => {
   };
 
   const mockMovie: Movie = {
+    id: 1,
     title: "Test Movie Original",
     releaseDate: "2024-01-01",
     images: {
@@ -101,6 +102,7 @@ describe("moviesManager", () => {
     it("adds similar movies to cache recursively", () => {
       setMovie(mockApiMovie.id, mockApiMovie);
       expect(getMovie(2)).toEqual({
+        id: 2,
         title: "Similar Movie Original",
         description: "",
         releaseDate: "2023-01-01",

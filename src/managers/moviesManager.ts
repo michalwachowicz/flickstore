@@ -23,6 +23,7 @@ const createMovieFromApi = (apiMovie: ApiMovie): Movie => {
   }
 
   return {
+    id: apiMovie.id,
     title: apiMovie.original_title || apiMovie.title,
     releaseDate: apiMovie.release_date,
     images: {
