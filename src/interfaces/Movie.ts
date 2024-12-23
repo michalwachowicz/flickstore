@@ -16,6 +16,9 @@ export interface ApiMovie {
       name: string;
     }[];
   };
+  images?: {
+    backdrops?: string[];
+  };
   genre_ids?: number[];
   genres?: { id: number }[];
   credits?: {
