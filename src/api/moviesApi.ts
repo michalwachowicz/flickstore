@@ -43,4 +43,15 @@ const getMovieDetails = async (
   return requestData(url);
 };
 
-export { querySearch, getMovieDetails };
+/*
+Supported Image Sizes:
+- Poster: w92, w154, w185, w342, w500, w780, original
+- Backdrop: w300, w780, w1280, original
+- Still: w92, w185, w300, original
+- Profile: w45, w185, w632, original
+- Logo: w45, w92, w154, w185, w300, w500, original
+ */
+const getImageUrl = (path: string, size: string | number = "original") =>
+  `https://image.tmdb.org/t/p/${typeof size === "number" ? `w${size}` : size}/${path}`;
+
+export { querySearch, getMovieDetails, getImageUrl };
