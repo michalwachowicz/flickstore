@@ -1,5 +1,6 @@
-import normalizeString from "../utils/stringNormalizer";
+import Fuse from "fuse.js";
 import SearchQuery from "../interfaces/SearchQuery";
+import normalizeString from "../utils/stringNormalizer";
 import { querySearch } from "../api/moviesApi";
 import { getMovie, setMovie } from "./moviesManager";
 
@@ -13,11 +14,20 @@ export default async function getSearchResults(
   const normalizedQuery = normalizeString(query);
   if (normalizedQuery === "") return [];
 
-  const cachedSearch = cache[normalizedQuery];
+  const fuse = new Fuse(Object.keys(cache), {
+    includeScore: true,
+    threshold: 0.3,
+  });
+  const fuzzyMatch = fuse.search(normalizedQuery);
+
+  const bestMatch =
+    fuzzyMatch.length > 0 ? fuzzyMatch[0].item : normalizedQuery;
+
+  const cachedSearch = cache[bestMatch];
   const cachedResults = cachedSearch?.pages[page];
 
   if (!cachedSearch || !cachedResults) {
-    const data = await querySearch(normalizedQuery, page);
+    const data = await querySearch(bestMatch, page);
     const dataResults = data.results;
     const pageArr: number[] = [];
 
@@ -43,5 +53,5 @@ export default async function getSearchResults(
     }
   }
 
-  return cache[normalizedQuery].pages[page].map((result) => getMovie(result));
+  return cache[bestMatch].pages[page].map((result) => getMovie(result));
 }

@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "fuse.js": "^7.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2"
@@ -54,6 +55,8 @@
     "tabWidth": 2,
     "singleQuote": false,
     "trailingComma": "all",
-    "plugins": ["prettier-plugin-tailwindcss"]
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
   }
 }

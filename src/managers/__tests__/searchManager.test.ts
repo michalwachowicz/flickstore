@@ -128,6 +128,34 @@ describe("searchManager", () => {
           },
         });
       });
+
+      it("finds the query by fuzzy search", async () => {
+        mockResolvedQuery([
+          {
+            id: 0,
+            title: "Test Movie",
+            original_title: "Test Movie Original",
+            overview: "A test movie description",
+            release_date: "2024-01-01",
+            poster_path: "/poster.jpg",
+            backdrop_path: "/backdrop.jpg",
+          },
+        ]);
+
+        let results = await getSearchResults("spiderman");
+        expect(results).toHaveLength(1);
+        expect(cache.spiderman).toBeDefined();
+
+        results = await getSearchResults("spidelman");
+        expect(results).toHaveLength(1);
+        expect(cache.spidelman).toBeUndefined();
+
+        results = await getSearchResults("spider man");
+        expect(results).toHaveLength(1);
+        expect(cache["spider man"]).toBeUndefined();
+
+        expect(mockedQuerySearch).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });
