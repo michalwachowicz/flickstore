@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "@/Components/Navbar";
 import Search from "@/Components/Search";
+import Footer from "@/Components/Footer";
 
 const MainPage = () => {
   const [searchBtn, setSearchBtn] = useState<HTMLButtonElement | null>(null);
@@ -14,7 +15,7 @@ const MainPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900">
+    <div className="relative min-h-screen bg-neutral-900">
       <Navbar
         isSearchOpen={searchBtn !== null}
         onSearchOpen={(ref) => setSearchBtn(ref)}
@@ -23,6 +24,8 @@ const MainPage = () => {
       <div className="mt-[5.25rem]">
         <Outlet />
       </div>
+
+      <Footer />
 
       {searchBtn !== null && <Search onClose={searchCloseHandler} />}
     </div>
