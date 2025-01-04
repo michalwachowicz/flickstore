@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { Movie } from "../interfaces/Movie";
 import SearchIcon from "@/Assets/images/icons/search.svg?react";
+import ListItemButton from "@/Components/ListItemButton";
+import useDebounce from "../hooks/debounce";
+import getSearchResults from "../managers/searchManager";
 
 interface Props {
   onClose?: () => void;
@@ -10,11 +15,23 @@ const Search = ({ onClose = () => {} }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [focused, setFocused] = useState(false);
+  const [movies, setMovies] = useState<Movie[]>([]);
+
   const [query, setQuery] = useState("");
+  const debouncedQuery = useDebounce(query, 500);
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    const updateMovies = async () => {
+      const results = await getSearchResults(debouncedQuery);
+      setMovies(results.slice(0, 3));
+    };
+
+    updateMovies();
+  }, [debouncedQuery]);
 
   useEffect(() => {
     const clickHandler = (e: MouseEvent) => {
@@ -61,7 +78,7 @@ const Search = ({ onClose = () => {} }: Props) => {
         id="search-box"
         data-testid="search-box"
         ref={searchBoxRef}
-        className="w-full max-w-xl rounded-lg bg-neutral-900 p-4 shadow-lg"
+        className="max-h-[calc(100vh-2rem)] w-full max-w-xl rounded-lg bg-neutral-900 p-4 shadow-lg"
       >
         <form
           className={`rounded-lg bg-neutral-800 p-2 ${focused ? "border-2 border-solid border-amber-400" : ""}`}
@@ -85,7 +102,22 @@ const Search = ({ onClose = () => {} }: Props) => {
             />
           </label>
         </form>
-        {/* TODO: Add List */}
+        {movies.length > 0 && (
+          <div className="mt-6">
+            <ul className="flex flex-col gap-6">
+              {movies.map((movie) => (
+                <ListItemButton movie={movie} key={movie.id} />
+              ))}
+            </ul>
+            <Link
+              className="mt-6 flex w-full items-center justify-center rounded-lg bg-amber-400 p-4 text-2xl font-bold text-neutral-950"
+              to={`/search/${debouncedQuery.replace(" ", "%20")}`}
+              role="button"
+            >
+              See More Results
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
