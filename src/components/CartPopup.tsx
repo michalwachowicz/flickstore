@@ -26,7 +26,7 @@ const CartPopup = ({ cart, onClear = () => {}, onClose = () => {} }: Props) => {
     <div
       ref={popupRef}
       data-testid="cart-popup"
-      className="absolute right-0 top-full rounded-lg bg-neutral-950 p-6 shadow-2xl"
+      className="animate-popupOpen absolute right-0 top-full origin-top-right rounded-lg bg-neutral-950 p-6 shadow-2xl"
     >
       <header className="flex min-w-72 items-center justify-between">
         <div>
