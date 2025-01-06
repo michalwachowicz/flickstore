@@ -2,7 +2,7 @@
 import React, { createContext, Dispatch, useContext, useReducer } from "react";
 
 interface CartAction {
-  type: "added" | "deleted";
+  type: "added" | "deleted" | "cleared";
   id: number;
 }
 
@@ -15,6 +15,8 @@ const cartReducer = (cart: number[], action: CartAction) => {
       return [...cart, action.id];
     case "deleted":
       return cart.filter((id) => id !== action.id);
+    case "cleared":
+      return [];
     default:
       throw new Error(`Unknown action: ${action.type}`);
   }
