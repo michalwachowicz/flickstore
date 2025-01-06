@@ -6,6 +6,7 @@ import Footer from "@/Components/Footer";
 
 const MainPage = () => {
   const [searchBtn, setSearchBtn] = useState<HTMLButtonElement | null>(null);
+  const navbarHeight = "5.25rem";
 
   const searchCloseHandler = () => {
     if (searchBtn === null) return;
@@ -15,13 +16,15 @@ const MainPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-neutral-900">
+    <div
+      className={`relative min-h-[calc(100vh-${navbarHeight})] bg-neutral-900`}
+    >
       <Navbar
         isSearchOpen={searchBtn !== null}
         onSearchOpen={(ref) => setSearchBtn(ref)}
       />
 
-      <div className="mt-[5.25rem]">
+      <div className={`mt-[${navbarHeight}]`}>
         <Outlet />
       </div>
 
