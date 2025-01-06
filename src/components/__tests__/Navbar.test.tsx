@@ -1,6 +1,11 @@
+import { act } from "react";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import Navbar from "@/Components/Navbar";
+
+vi.mock("@/Components/CartPopup", () => ({
+  default: () => <div data-testid="cart-popup" />,
+}));
 
 describe("<Navbar />", () => {
   it("renders all buttons properly", () => {
@@ -36,9 +41,26 @@ describe("<Navbar />", () => {
     render(<Navbar onSearchOpen={fn} />);
 
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: /open search bar/i }));
+    await act(async () => {
+      await user.click(
+        screen.getByRole("button", { name: /open search bar/i }),
+      );
+    });
 
     expect(fn).toHaveBeenCalledTimes(1);
     expect(fn).not.toHaveBeenCalledWith(null);
+  });
+
+  it("opens the cart popup on button click", async () => {
+    render(<Navbar />);
+
+    expect(screen.queryByTestId("cart-popup")).not.toBeInTheDocument();
+
+    const user = userEvent.setup();
+    await act(async () => {
+      await user.click(screen.getByRole("button", { name: /open cart/i }));
+    });
+
+    expect(screen.getByTestId("cart-popup")).toBeInTheDocument();
   });
 });
