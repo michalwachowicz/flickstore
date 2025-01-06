@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import DeleteIcon from "@/Assets/images/icons/delete.svg?react";
 import CartIcon from "@/Assets/images/icons/cart.svg?react";
 import IconButton from "@/Components/IconButton";
@@ -12,9 +12,15 @@ interface Props {
 
 const CartPopup = ({ cart, onClear = () => {}, onClose = () => {} }: Props) => {
   const isEmpty = cart.length === 0;
+
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   useClosePopup(popupRef, onClose);
+
+  useEffect(() => {
+    if (titleRef.current) titleRef.current.focus();
+  }, []);
 
   return (
     <div
@@ -24,7 +30,13 @@ const CartPopup = ({ cart, onClear = () => {}, onClose = () => {} }: Props) => {
     >
       <header className="flex min-w-72 items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-neutral-200">Your Cart</h2>
+          <h2
+            ref={titleRef}
+            className="text-2xl font-bold text-neutral-200"
+            tabIndex={-1}
+          >
+            Your Cart
+          </h2>
           <div className="font-light text-neutral-400">{cart.length} ITEMS</div>
         </div>
         <IconButton label="Clear the cart" disabled={isEmpty} onClick={onClear}>
