@@ -3,7 +3,7 @@ import React, { createContext, Dispatch, useContext, useReducer } from "react";
 
 interface CartAction {
   type: "added" | "deleted" | "cleared";
-  id: number;
+  id?: number;
 }
 
 const CartContext = createContext<number[]>([]);
@@ -12,8 +12,10 @@ const CartDispatchContext = createContext<Dispatch<CartAction>>(() => {});
 const cartReducer = (cart: number[], action: CartAction) => {
   switch (action.type) {
     case "added":
+      if (action.id === undefined) return cart;
       return [...cart, action.id];
     case "deleted":
+      if (action.id === undefined) return cart;
       return cart.filter((id) => id !== action.id);
     case "cleared":
       return [];
