@@ -4,6 +4,7 @@ import { Movie } from "../interfaces/Movie";
 import SearchIcon from "@/Assets/images/icons/search.svg?react";
 import ListItemButton from "@/Components/ListItemButton";
 import useDebounce from "../hooks/debounce";
+import useClosePopup from "../hooks/closePopup";
 import getSearchResults from "../managers/searchManager";
 
 interface Props {
@@ -20,6 +21,8 @@ const Search = ({ onClose = () => {} }: Props) => {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 500);
 
+  useClosePopup(searchBoxRef, onClose);
+
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
@@ -32,41 +35,6 @@ const Search = ({ onClose = () => {} }: Props) => {
 
     updateMovies();
   }, [debouncedQuery]);
-
-  useEffect(() => {
-    const clickHandler = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-
-      if (
-        searchBoxRef.current === null ||
-        target === null ||
-        !searchBoxRef.current.contains(target)
-      ) {
-        onClose();
-      }
-    };
-
-    setTimeout(() => {
-      window.addEventListener("click", clickHandler);
-    }, 0);
-
-    return () => {
-      setTimeout(() => {
-        window.removeEventListener("click", clickHandler);
-      }, 0);
-    };
-  }, [onClose]);
-
-  useEffect(() => {
-    const keyDownHandler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-
-    window.addEventListener("keydown", keyDownHandler);
-    return () => {
-      window.removeEventListener("keydown", keyDownHandler);
-    };
-  }, [onClose]);
 
   return (
     <div className="fixed inset-x-0 top-0 flex h-screen w-screen items-center justify-center p-6">
