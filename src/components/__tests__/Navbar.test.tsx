@@ -63,4 +63,23 @@ describe("<Navbar />", () => {
 
     expect(screen.getByTestId("cart-popup")).toBeInTheDocument();
   });
+
+  it("changes cart button title", async () => {
+    render(<Navbar />);
+
+    const user = userEvent.setup();
+    const openBtn = screen.getByRole("button", { name: /open cart/i });
+
+    expect(openBtn).toBeInTheDocument();
+    await act(async () => {
+      await user.click(openBtn);
+    });
+
+    expect(
+      screen.getByRole("button", { name: /close cart/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /open cart/i }),
+    ).not.toBeInTheDocument();
+  });
 });

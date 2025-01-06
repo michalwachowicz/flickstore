@@ -38,7 +38,10 @@ const Navbar = ({ isSearchOpen = false, onSearchOpen = () => {} }: Props) => {
           >
             <SearchIcon />
           </IconButton>
-          <IconButton label="Open cart" onClick={() => setCartPopupOpen(true)}>
+          <IconButton
+            label={`${cartPopupOpen ? "Close" : "Open"} cart`}
+            onClick={() => setCartPopupOpen(true)}
+          >
             <CartIcon />
           </IconButton>
 
