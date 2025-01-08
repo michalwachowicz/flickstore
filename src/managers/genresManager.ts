@@ -1,3 +1,7 @@
+import SearchQuery from "../interfaces/SearchQuery";
+import { getMoviesByGenre } from "../api/moviesApi";
+import { getMovie, setMovie } from "./moviesManager";
+
 const genres = {
   28: "Action",
   12: "Adventure",
@@ -22,6 +26,41 @@ const genres = {
 
 export type GenreId = keyof typeof genres;
 
-export default function getGenre(id: GenreId) {
-  return genres[id];
-}
+const cache: { [key: number]: SearchQuery } = {};
+
+const getGenre = (id: GenreId) => genres[id];
+
+const getGenreResults = async (genreId: GenreId, page: number = 1) => {
+  const cachedGenre = cache[genreId];
+  const cachedResults = cachedGenre?.pages[page];
+
+  if (!cachedGenre || !cachedResults) {
+    const data = await getMoviesByGenre(genreId, page);
+    const dataResults = data.results;
+    const pageArr: number[] = [];
+
+    if (dataResults && Array.isArray(dataResults)) {
+      dataResults.forEach((result) => {
+        const { id } = result;
+        pageArr.push(id);
+
+        if (!getMovie(id)) setMovie(id, result);
+      });
+    }
+    if (cachedGenre) {
+      cachedGenre.pages[page] = pageArr;
+    } else {
+      cache[genreId] = {
+        totalPages: data.total_pages || 0,
+        totalResults: data.total_results || 0,
+        pages: {
+          [page]: pageArr,
+        },
+      };
+    }
+  }
+
+  return cache[genreId].pages[page].map((result) => getMovie(result));
+};
+
+export { getGenre, getGenreResults };
