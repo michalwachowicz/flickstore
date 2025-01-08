@@ -1,3 +1,5 @@
+import { GenreId } from "../managers/genresManager";
+
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string;
 const BASE_URL = "https://api.themoviedb.org/3";
 
@@ -54,4 +56,22 @@ Supported Image Sizes:
 const getImageUrl = (path: string, size: string | number = "original") =>
   `https://image.tmdb.org/t/p/${typeof size === "number" ? `w${size}` : size}/${path}`;
 
-export { querySearch, getMovieDetails, getImageUrl };
+const getMoviesByGenre = async (id: GenreId, page: number = 1) =>
+  requestData(
+    `/discover/movie?with_genres=${id}&page=${page}&language=en-US&sort_by=popularity.desc`,
+  );
+
+const getPopularMovies = async (page: number = 1) =>
+  requestData(`/movie/popular?language=en-US&page=${page}`);
+
+const getTopRatedMovies = async (page: number = 1) =>
+  requestData(`/movie/top_rated?language=en-US&page=${page}`);
+
+export {
+  querySearch,
+  getMovieDetails,
+  getImageUrl,
+  getMoviesByGenre,
+  getPopularMovies,
+  getTopRatedMovies,
+};
