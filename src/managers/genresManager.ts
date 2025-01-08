@@ -26,6 +26,7 @@ const genres = {
 
 export type GenreId = keyof typeof genres;
 
+// Exported for testing only
 const cache: { [key: number]: SearchQuery } = {};
 
 const getGenre = (id: GenreId) => genres[id];
@@ -63,4 +64,4 @@ const getGenreResults = async (genreId: GenreId, page: number = 1) => {
   return cache[genreId].pages[page].map((result) => getMovie(result));
 };
 
-export { getGenre, getGenreResults };
+export { cache, getGenre, getGenreResults };
