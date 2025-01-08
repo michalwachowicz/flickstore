@@ -20,7 +20,7 @@ const genres = {
   37: "Western",
 } as const;
 
-type GenreId = keyof typeof genres;
+export type GenreId = keyof typeof genres;
 
 export default function getGenre(id: GenreId) {
   return genres[id];
