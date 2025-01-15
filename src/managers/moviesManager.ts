@@ -1,8 +1,12 @@
 import { ApiMovie, Movie } from "../interfaces/Movie";
 import { CastMember, CrewMember } from "../interfaces/Credit";
 import createCreditFromApi from "./creditsManager";
+import { getPopularMovies, getTopRatedMovies } from "../api/moviesApi";
 
 const cache: { [key: number]: Movie } = {};
+
+let popularMovies: number[] = [];
+let topRatedMovies: number[] = [];
 
 const getMovie = (id: number) => cache[id];
 
@@ -61,4 +65,41 @@ const setMovie = (id: number, movie: Movie | ApiMovie) => {
   cache[id] = isMovie(movie) ? movie : createMovieFromApi(movie);
 };
 
-export { getMovie, setMovie };
+const getPageArrayFromResults = (results: ApiMovie[]) => {
+  const arr: number[] = [];
+
+  if (results && Array.isArray(results)) {
+    results.forEach((result) => {
+      const { id } = result;
+      arr.push(id);
+
+      if (!getMovie(id)) setMovie(id, result);
+    });
+  }
+
+  return arr;
+};
+
+const getCachedPopularMovies = async () => {
+  if (popularMovies.length > 0) return popularMovies;
+
+  const data = await getPopularMovies();
+  const dataResults = data.results;
+
+  popularMovies = getPageArrayFromResults(dataResults);
+
+  return popularMovies;
+};
+
+const getCachedTopRatedMovies = async () => {
+  if (topRatedMovies.length > 0) return topRatedMovies;
+
+  const data = await getTopRatedMovies();
+  const dataResults = data.results;
+
+  topRatedMovies = getPageArrayFromResults(dataResults);
+
+  return topRatedMovies;
+};
+
+export { getMovie, setMovie, getCachedPopularMovies, getCachedTopRatedMovies };

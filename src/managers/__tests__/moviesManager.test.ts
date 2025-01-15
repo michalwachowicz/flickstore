@@ -1,5 +1,17 @@
+import { afterEach, beforeEach, MockedFunction } from "vitest";
 import { ApiMovie, Movie } from "../../interfaces/Movie";
-import { getMovie, setMovie } from "../moviesManager";
+import {
+  getCachedPopularMovies,
+  getCachedTopRatedMovies,
+  getMovie,
+  setMovie,
+} from "../moviesManager";
+import { getPopularMovies, getTopRatedMovies } from "../../api/moviesApi";
+
+vi.mock("../../api/moviesApi", () => ({
+  getPopularMovies: vi.fn(),
+  getTopRatedMovies: vi.fn(),
+}));
 
 describe("moviesManager", () => {
   const mockApiMovie: ApiMovie = {
@@ -123,5 +135,83 @@ describe("moviesManager", () => {
   describe("getMovie()", () => {
     it("returns undefined if a movie is not cached", () =>
       expect(getMovie(999)).toBeUndefined());
+  });
+
+  describe("cached functions", () => {
+    const mockResults: { results: ApiMovie[] } = {
+      results: [
+        {
+          id: 0,
+          title: "Movie 1",
+          original_title: "Movie 1 Original",
+          overview: "",
+          release_date: "2023-01-01",
+          poster_path: "/poster0.jpg",
+          backdrop_path: "/backdrop0.jpg",
+        },
+        {
+          id: 1,
+          title: "Movie 2",
+          original_title: "Movie 2 Original",
+          overview: "",
+          release_date: "2023-01-01",
+          poster_path: "/poster0.jpg",
+          backdrop_path: "/backdrop0.jpg",
+        },
+      ],
+    };
+
+    const mockResolveGetter = (
+      mockFn: MockedFunction<(page?: number) => Promise<unknown>>,
+    ) => {
+      mockFn.mockResolvedValue(
+        new Promise((resolve) => {
+          resolve({ ...mockResults });
+        }),
+      );
+    };
+
+    const testCachedFunction = (
+      cachedFn: () => Promise<number[]>,
+      mockedApiFn: MockedFunction<(page?: number) => Promise<unknown>>,
+    ) => {
+      beforeEach(() => {
+        mockResolveGetter(mockedApiFn);
+      });
+
+      afterEach(() => {
+        mockedApiFn.mockClear();
+      });
+
+      it("fetches data only once", async () => {
+        await cachedFn();
+        expect(mockedApiFn).toHaveBeenCalledTimes(1);
+
+        await cachedFn();
+        expect(mockedApiFn).toHaveBeenCalledTimes(1);
+      });
+
+      it("returns the proper value", async () => {
+        const movies = await cachedFn();
+        expect(movies).toEqual([0, 1]);
+      });
+
+      it("caches movies properly", async () => {
+        await cachedFn();
+
+        expect(getMovie(0)).toBeDefined();
+        expect(getMovie(1)).toBeDefined();
+      });
+    };
+
+    describe("getCachedPopularMovies()", () => {
+      const mockedGetPopularMovies = vi.mocked(getPopularMovies);
+      testCachedFunction(getCachedPopularMovies, mockedGetPopularMovies);
+    });
+
+    describe("getCachedTopRatedMovies()", () => {
+      const mockedGetTopRatedMovies = vi.mocked(getTopRatedMovies);
+      testCachedFunction(getCachedTopRatedMovies, mockedGetTopRatedMovies);
+    });
   });
 });
