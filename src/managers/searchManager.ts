@@ -2,7 +2,7 @@ import Fuse from "fuse.js";
 import SearchQuery from "../interfaces/SearchQuery";
 import normalizeString from "../utils/stringNormalizer";
 import { querySearch } from "../api/moviesApi";
-import { getMovie, setMovie } from "./moviesManager";
+import { getMovie, getPageArrayFromResults } from "./moviesManager";
 
 // Exported for testing only
 export const cache: { [key: string]: SearchQuery } = {};
@@ -29,16 +29,7 @@ export default async function getSearchResults(
   if (!cachedSearch || !cachedResults) {
     const data = await querySearch(bestMatch, page);
     const dataResults = data.results;
-    const pageArr: number[] = [];
-
-    if (dataResults && Array.isArray(dataResults)) {
-      dataResults.forEach((result) => {
-        const { id } = result;
-        pageArr.push(id);
-
-        if (!getMovie(id)) setMovie(id, result);
-      });
-    }
+    const pageArr = getPageArrayFromResults(dataResults);
 
     if (cachedSearch) {
       cachedSearch.pages[page] = pageArr;

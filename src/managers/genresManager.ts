@@ -1,6 +1,6 @@
 import SearchQuery from "../interfaces/SearchQuery";
 import { getMoviesByGenre } from "../api/moviesApi";
-import { getMovie, setMovie } from "./moviesManager";
+import { getMovie, getPageArrayFromResults } from "./moviesManager";
 
 const genres = {
   28: "Action",
@@ -38,16 +38,8 @@ const getGenreResults = async (genreId: GenreId, page: number = 1) => {
   if (!cachedGenre || !cachedResults) {
     const data = await getMoviesByGenre(genreId, page);
     const dataResults = data.results;
-    const pageArr: number[] = [];
+    const pageArr = getPageArrayFromResults(dataResults);
 
-    if (dataResults && Array.isArray(dataResults)) {
-      dataResults.forEach((result) => {
-        const { id } = result;
-        pageArr.push(id);
-
-        if (!getMovie(id)) setMovie(id, result);
-      });
-    }
     if (cachedGenre) {
       cachedGenre.pages[page] = pageArr;
     } else {

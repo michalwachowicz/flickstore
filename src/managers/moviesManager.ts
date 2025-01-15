@@ -102,4 +102,10 @@ const getCachedTopRatedMovies = async () => {
   return topRatedMovies;
 };
 
-export { getMovie, setMovie, getCachedPopularMovies, getCachedTopRatedMovies };
+export {
+  getMovie,
+  setMovie,
+  getPageArrayFromResults,
+  getCachedPopularMovies,
+  getCachedTopRatedMovies,
+};
