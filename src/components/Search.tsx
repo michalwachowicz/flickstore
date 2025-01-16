@@ -46,7 +46,7 @@ const Search = ({ onClose = () => {} }: Props) => {
         id="search-box"
         data-testid="search-box"
         ref={searchBoxRef}
-        className="animate-popupOpen max-h-[calc(100vh-2rem)] w-full max-w-xl origin-top rounded-lg bg-neutral-900 p-4 shadow-lg"
+        className="max-h-[calc(100vh-2rem)] w-full max-w-xl origin-top animate-popupOpen rounded-lg bg-neutral-900 p-4 shadow-lg"
       >
         <form
           className={`rounded-lg bg-neutral-800 p-2 ${focused ? "border-2 border-solid border-amber-400" : ""}`}
