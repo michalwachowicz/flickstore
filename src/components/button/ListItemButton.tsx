@@ -9,7 +9,7 @@ interface Props {
 const ListItemButton = ({ movie }: Props) => (
   <li>
     <Link
-      to={`/movie/${movie.id}`}
+      to={`/movie?id=${movie.id}`}
       role="button"
       className="flex items-center gap-4"
     >
