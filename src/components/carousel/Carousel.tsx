@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import CarouselButtons from "@/Components/CarouselButtons";
+import CarouselButtons from "@/Components/carousel/CarouselButtons";
 
 interface Props {
   visibleCount: number;

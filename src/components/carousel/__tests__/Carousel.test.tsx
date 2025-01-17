@@ -1,7 +1,7 @@
 import { act } from "react";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import Carousel from "@/Components/Carousel";
+import Carousel from "@/Components/carousel/Carousel";
 
 describe("<Carousel />", () => {
   const ITEMS_COUNT = 10;

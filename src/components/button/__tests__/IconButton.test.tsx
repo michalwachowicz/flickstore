@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import IconButton from "@/Components/IconButton";
+import IconButton from "@/Components/button/IconButton";
 import SearchIcon from "@/Assets/images/icons/search.svg?react";
 
 describe("<IconButton />", () => {

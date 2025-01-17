@@ -1,8 +1,8 @@
 import { act } from "react";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { CartProvider } from "../../contexts/CartContext";
-import AddToCartButton from "@/Components/AddToCartButton";
+import { CartProvider } from "../../../contexts/CartContext";
+import AddToCartButton from "@/Components/button/AddToCartButton";
 
 describe("<AddToCartButton />", () => {
   it("adds and removes movie properly", async () => {

@@ -1,4 +1,4 @@
-import { useCart, useCartDispatch } from "../contexts/CartContext";
+import { useCart, useCartDispatch } from "../../contexts/CartContext";
 import CheckIcon from "@/Assets/images/icons/check.svg?react";
 
 interface Props {

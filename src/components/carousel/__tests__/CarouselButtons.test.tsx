@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import CarouselButtons from "@/Components/CarouselButtons";
+import CarouselButtons from "@/Components/carousel/CarouselButtons";
 
 describe("<CarouselButtons />", () => {
   it("renders correctly", () => {

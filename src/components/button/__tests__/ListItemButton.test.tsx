@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import ListItemButton from "@/Components/ListItemButton";
+import ListItemButton from "@/Components/button/ListItemButton";
 
 describe("<ListItemButton />", () => {
   it("renders properly", () => {

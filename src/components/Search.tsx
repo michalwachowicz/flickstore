@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Movie } from "../interfaces/Movie";
 import SearchIcon from "@/Assets/images/icons/search.svg?react";
-import ListItemButton from "@/Components/ListItemButton";
+import ListItemButton from "@/Components/button/ListItemButton";
 import useDebounce from "../hooks/debounce";
 import useClosePopup from "../hooks/closePopup";
 import getSearchResults from "../managers/searchManager";

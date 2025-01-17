@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import DeleteIcon from "@/Assets/images/icons/delete.svg?react";
 import CartIcon from "@/Assets/images/icons/cart.svg?react";
-import IconButton from "@/Components/IconButton";
+import IconButton from "@/Components/button/IconButton";
 import useClosePopup from "../hooks/closePopup";
 
 interface Props {

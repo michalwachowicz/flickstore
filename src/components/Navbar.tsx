@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import Logo from "@/Assets/images/logo/logo.svg?react";
 import SearchIcon from "@/Assets/images/icons/search.svg?react";
 import CartIcon from "@/Assets/images/icons/cart.svg?react";
-import IconButton from "@/Components/IconButton";
+import IconButton from "@/Components/button/IconButton";
 import CartPopup from "@/Components/CartPopup";
 import { useCart, useCartDispatch } from "../contexts/CartContext";
 
