@@ -25,7 +25,7 @@ const MainPage = () => {
         onSearchOpen={(ref) => setSearchBtn(ref)}
       />
 
-      <div className={`mt-[${navbarHeight}]`}>
+      <div style={{ marginTop: navbarHeight }}>
         <Outlet />
       </div>
 
