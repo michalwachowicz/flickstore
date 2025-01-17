@@ -13,10 +13,11 @@ const CarouselButton = ({
     type="button"
     aria-label={title}
     onClick={onClick}
-    className="rounded border border-neutral-50 bg-neutral-950 px-1.5 py-3 opacity-50 hover:opacity-75"
+    className="btn-carousel"
   >
+    <div className="btn-carousel-bg" />
     <ChevronIcon
-      className={`h-6 w-6 [&>path]:fill-amber-400 ${flipped ? "flipped-x" : ""}`}
+      className={`h-6 w-6 [&>path]:fill-amber-400 ${flipped ? "flipped-x" : ""} relative z-10`}
     />
   </button>
 );
@@ -28,8 +29,8 @@ const CarouselButtons = ({
   onPrev?: () => void;
   onNext?: () => void;
 }) => (
-  <div className="flex w-full justify-between">
-    <CarouselButton title="Previous" onClick={onPrev} />
+  <div className="absolute top-1/2 flex w-full -translate-y-1/2 transform justify-between">
+    <CarouselButton title="Previous" onClick={onPrev} flipped />
     <CarouselButton title="Next" onClick={onNext} />
   </div>
 );

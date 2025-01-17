@@ -18,4 +18,16 @@
       @apply fill-neutral-600;
     }
   }
+
+  &-carousel {
+    @apply relative rounded border border-neutral-50 px-1.5 py-3;
+
+    &-bg {
+      @apply absolute inset-0 bg-neutral-950 opacity-50;
+    }
+
+    &:hover > &-bg {
+      @apply opacity-75;
+    }
+  }
 }
