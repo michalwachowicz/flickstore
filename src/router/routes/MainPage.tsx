@@ -17,7 +17,8 @@ const MainPage = () => {
 
   return (
     <div
-      className={`relative min-h-[calc(100vh-${navbarHeight})] bg-neutral-900`}
+      className="relative bg-neutral-900"
+      style={{ minHeight: `calc(100vh - ${navbarHeight})` }}
     >
       <Navbar
         isSearchOpen={searchBtn !== null}
