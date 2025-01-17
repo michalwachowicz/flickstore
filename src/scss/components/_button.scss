@@ -30,4 +30,16 @@
       @apply opacity-75;
     }
   }
+
+  &-info {
+    @apply relative p-1;
+
+    &-bg {
+      @apply absolute inset-0 rounded-full bg-neutral-400 opacity-30;
+    }
+
+    &:hover > &-bg {
+      @apply opacity-40;
+    }
+  }
 }
