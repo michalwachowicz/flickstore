@@ -80,9 +80,25 @@ describe("<Carousel />", () => {
 
   it("moves to next elements on button clicks", async () => {
     const itemCount = 2;
+    let startLeft = 0;
 
-    render(<Carousel visibleCount={itemCount}>{mockChildren}</Carousel>);
-    mockBoundingClientRect(itemCount);
+    const onPrev = vi.fn(() => {
+      startLeft -= 216;
+      mockBoundingClientRect(itemCount, startLeft);
+    });
+
+    const onNext = vi.fn(() => {
+      startLeft += 216;
+      mockBoundingClientRect(itemCount, startLeft);
+    });
+
+    render(
+      <Carousel visibleCount={itemCount} onPrev={onPrev} onNext={onNext}>
+        {mockChildren}
+      </Carousel>,
+    );
+
+    mockBoundingClientRect(itemCount, startLeft);
 
     const user = userEvent.setup();
     const carousel = screen.getByTestId("carousel");
@@ -95,7 +111,6 @@ describe("<Carousel />", () => {
 
     await act(async () => {
       await user.click(nextBtn);
-      mockBoundingClientRect(itemCount, 216);
       await timeout(500);
     });
 
@@ -106,7 +121,6 @@ describe("<Carousel />", () => {
     const prevBtn = screen.getByRole("button", { name: /prev/i });
     await act(async () => {
       await user.click(prevBtn);
-      mockBoundingClientRect(itemCount);
       await timeout(500);
     });
 

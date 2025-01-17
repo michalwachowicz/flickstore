@@ -4,10 +4,18 @@ import CarouselButtons from "@/Components/CarouselButtons";
 interface Props {
   visibleCount: number;
   autoSlide?: number;
+  onPrev?: () => void;
+  onNext?: () => void;
   children: React.ReactNode | React.ReactNode[];
 }
 
-const Carousel = ({ visibleCount, autoSlide = -1, children }: Props) => {
+const Carousel = ({
+  visibleCount,
+  autoSlide = -1,
+  onPrev = () => {},
+  onNext = () => {},
+  children,
+}: Props) => {
   const childArr = React.Children.toArray(children);
   const childCount = childArr.length;
 
@@ -21,6 +29,8 @@ const Carousel = ({ visibleCount, autoSlide = -1, children }: Props) => {
       const newIndex = prevIndex - visibleCount;
       return newIndex < 0 ? Math.max(childCount - visibleCount, 0) : newIndex;
     });
+
+    onPrev();
   };
 
   const goNext = useCallback(() => {
@@ -28,7 +38,9 @@ const Carousel = ({ visibleCount, autoSlide = -1, children }: Props) => {
       const newIndex = prevIndex + visibleCount;
       return newIndex >= childCount ? 0 : newIndex;
     });
-  }, [childCount, visibleCount]);
+
+    onNext();
+  }, [onNext, childCount, visibleCount]);
 
   useEffect(() => {
     if (autoSlide === -1) return () => {};
