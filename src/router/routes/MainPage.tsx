@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "@/Components/Navbar";
 import Search from "@/Components/Search";
@@ -6,6 +6,9 @@ import Footer from "@/Components/Footer";
 
 const MainPage = () => {
   const [searchBtn, setSearchBtn] = useState<HTMLButtonElement | null>(null);
+  const [footerHeight, setFooterHeight] = useState<number>(0);
+
+  const footerRef = useRef<HTMLDivElement | null>(null);
   const navbarHeight = "5.25rem";
 
   const searchCloseHandler = () => {
@@ -14,6 +17,21 @@ const MainPage = () => {
     searchBtn.focus();
     setSearchBtn(null);
   };
+
+  useEffect(() => {
+    const updateFooterHeight = () => {
+      if (footerRef.current) {
+        setFooterHeight(footerRef.current.clientHeight);
+      }
+    };
+
+    updateFooterHeight();
+
+    window.addEventListener("resize", updateFooterHeight);
+    return () => {
+      window.removeEventListener("resize", updateFooterHeight);
+    };
+  }, []);
 
   return (
     <div
@@ -25,11 +43,13 @@ const MainPage = () => {
         onSearchOpen={(ref) => setSearchBtn(ref)}
       />
 
-      <div style={{ marginTop: navbarHeight }}>
+      <div
+        style={{ marginTop: navbarHeight, paddingBottom: `${footerHeight}px` }}
+      >
         <Outlet />
       </div>
 
-      <Footer />
+      <Footer ref={footerRef} />
 
       {searchBtn !== null && <Search onClose={searchCloseHandler} />}
     </div>
