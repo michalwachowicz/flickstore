@@ -18,6 +18,9 @@ export default {
         moveBg: "moveBg 5s ease-in-out infinite alternate",
         popupOpen: "popupOpen 0.25s ease-out forwards",
       },
+      boxShadow: {
+        innerBig: "inset 0 -128px 128px",
+      },
     },
   },
   plugins: [],
