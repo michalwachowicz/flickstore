@@ -33,4 +33,22 @@ describe("<AddToCartButton />", () => {
     });
     checkIfNotAdded();
   });
+
+  it("handles external on click method", async () => {
+    const fn = vi.fn();
+    render(
+      <CartProvider>
+        <AddToCartButton movieId={0} onClick={fn} />
+      </CartProvider>,
+    );
+
+    expect(fn).toHaveBeenCalledTimes(0);
+
+    const user = userEvent.setup();
+    await act(async () => {
+      await user.click(screen.getByRole("button"));
+    });
+
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
 });

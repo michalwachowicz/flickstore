@@ -1,17 +1,20 @@
+import React from "react";
 import { useCart, useCartDispatch } from "../../contexts/CartContext";
 import CheckIcon from "@/Assets/images/icons/check.svg?react";
 
 interface Props {
   movieId: number;
+  onClick?: (event?: React.MouseEvent) => void;
 }
 
-const AddToCartButton = ({ movieId }: Props) => {
+const AddToCartButton = ({ movieId, onClick = () => {} }: Props) => {
   const cart = useCart();
   const cartDispatch = useCartDispatch();
   const isInCart = cart.includes(movieId);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
     cartDispatch({ type: isInCart ? "deleted" : "added", id: movieId });
+    onClick(e);
   };
 
   return (
