@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import MovieInfoButton from "@/Components/button/MovieInfoButton";
-import MockMoviePage from "./MockMoviePage";
+import MockMoviePage from "@/Components/mocks/MockMoviePage";
 
 describe("<MovieInfoButton />", () => {
   it("renders correctly", () => {
