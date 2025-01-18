@@ -1,16 +1,19 @@
+import { act } from "react";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { userEvent } from "@testing-library/user-event";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import ListItemButton from "@/Components/button/ListItemButton";
+import MockMoviePage from "./MockMoviePage";
 
 describe("<ListItemButton />", () => {
-  it("renders properly", () => {
-    const movie = {
-      id: 0,
-      title: "Test",
-      releaseDate: "2025-01-01",
-      images: { poster: "/test" },
-    };
+  const movie = {
+    id: 0,
+    title: "Test",
+    releaseDate: "2025-01-01",
+    images: { poster: "/test" },
+  };
 
+  it("renders properly", () => {
     render(
       <MemoryRouter>
         <ListItemButton movie={movie} />
@@ -25,5 +28,24 @@ describe("<ListItemButton />", () => {
     expect(screen.getByText("2025")).toBeInTheDocument();
   });
 
-  it.todo("routes to the proper movie page");
+  it("routes to the proper movie page", async () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Routes>
+          <Route path="/movie/:id" element={<MockMoviePage />} />
+          <Route path="/" element={<ListItemButton movie={movie} />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(screen.queryByTestId("movie-page")).not.toBeInTheDocument();
+    const user = userEvent.setup();
+
+    await act(async () => {
+      await user.click(screen.getByRole("button"));
+    });
+
+    expect(screen.getByTestId("movie-page")).toBeInTheDocument();
+    expect(screen.getByText(/0/)).toBeInTheDocument();
+  });
 });

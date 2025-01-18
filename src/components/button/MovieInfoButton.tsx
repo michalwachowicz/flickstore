@@ -7,7 +7,7 @@ interface Props {
 
 const MovieInfoButton = ({ movieId }: Props) => (
   <Link
-    to={`/movie?id=${movieId}`}
+    to={`/movie/${movieId}`}
     role="button"
     className="btn-info"
     aria-label="Movie info"
