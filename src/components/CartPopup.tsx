@@ -1,8 +1,11 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import DeleteIcon from "@/Assets/images/icons/delete.svg?react";
 import CartIcon from "@/Assets/images/icons/cart.svg?react";
 import IconButton from "@/Components/button/IconButton";
+import ListItemButton from "@/Components/button/ListItemButton";
 import useClosePopup from "../hooks/closePopup";
+import { getMovie } from "../managers/moviesManager";
 
 interface Props {
   cart: number[];
@@ -43,6 +46,28 @@ const CartPopup = ({ cart, onClear = () => {}, onClose = () => {} }: Props) => {
             <p className="mx-4 font-light text-neutral-400">
               Looks like you haven’t added anything to your cart yet
             </p>
+          </div>
+        </div>
+      )}
+      {!isEmpty && (
+        <div className="mt-6">
+          <ul className="flex max-h-56 flex-col gap-4 overflow-y-scroll">
+            {cart.map((item) => (
+              <ListItemButton key={item} movie={getMovie(item)} size="small" />
+            ))}
+          </ul>
+          <div className="mt-6 flex items-center justify-between">
+            <div className="text-xl font-bold text-neutral-50">
+              Total: ${19.99 * cart.length}
+            </div>
+            <Link
+              to="/cart"
+              type="button"
+              className="rounded-lg bg-amber-400 px-6 py-2 text-xl font-bold text-neutral-950 transition-transform ease-in-out hover:scale-105"
+              onClick={() => onClose()}
+            >
+              Checkout
+            </Link>
           </div>
         </div>
       )}
