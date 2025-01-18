@@ -1,13 +1,31 @@
 import { act } from "react";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { useCart } from "../../contexts/CartContext";
 import Navbar from "@/Components/Navbar";
 
 vi.mock("@/Components/CartPopup", () => ({
   default: () => <div data-testid="cart-popup" />,
 }));
 
+vi.mock("../../contexts/CartContext", async () => {
+  const actual = (await vi.importActual(
+    "../../contexts/CartContext",
+  )) as typeof import("../../contexts/CartContext");
+
+  return {
+    ...actual,
+    useCart: vi.fn(),
+  };
+});
+
 describe("<Navbar />", () => {
+  const mockUseCart = vi.mocked(useCart);
+
+  beforeEach(() => {
+    mockUseCart.mockReturnValue([]);
+  });
+
   it("renders all buttons properly", () => {
     render(<Navbar />);
 
@@ -81,5 +99,18 @@ describe("<Navbar />", () => {
     expect(
       screen.queryByRole("button", { name: /open cart/i }),
     ).not.toBeInTheDocument();
+  });
+
+  it("shows the cart navbar icon items count", () => {
+    const { rerender } = render(<Navbar />);
+
+    expect(screen.queryByTestId("cart-icon-count")).not.toBeInTheDocument();
+    mockUseCart.mockReturnValueOnce([0, 1, 3]);
+
+    rerender(<Navbar />);
+
+    const cartCount = screen.getByTestId("cart-icon-count");
+    expect(cartCount).toBeInTheDocument();
+    expect(cartCount.textContent).toEqual("3");
   });
 });

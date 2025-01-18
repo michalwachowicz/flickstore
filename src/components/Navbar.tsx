@@ -43,6 +43,14 @@ const Navbar = ({ isSearchOpen = false, onSearchOpen = () => {} }: Props) => {
             onClick={() => setCartPopupOpen(true)}
           >
             <CartIcon />
+            {cart.length > 0 && (
+              <div
+                data-testid="cart-icon-count"
+                className="absolute bottom-0 right-0 rounded-2xl bg-amber-400 px-1.5 py-0.5 text-xs font-bold text-neutral-950"
+              >
+                {cart.length}
+              </div>
+            )}
           </IconButton>
 
           {cartPopupOpen && (
