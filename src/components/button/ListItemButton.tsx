@@ -4,9 +4,10 @@ import { getImageUrl } from "../../api/moviesApi";
 
 interface Props {
   movie: Movie;
+  size?: "small" | "large";
 }
 
-const ListItemButton = ({ movie }: Props) => (
+const ListItemButton = ({ movie, size = "large" }: Props) => (
   <li>
     <Link
       to={`/movie?id=${movie.id}`}
@@ -21,7 +22,9 @@ const ListItemButton = ({ movie }: Props) => (
       />
       <div className="flex w-full items-center justify-between gap-8">
         <div>
-          <div className="text-xl font-bold text-neutral-200">
+          <div
+            className={`${size === "large" ? "text-xl" : "text-lg"} font-bold text-neutral-200`}
+          >
             {movie.title}
           </div>
           <div className="mt-2 text-neutral-400">
