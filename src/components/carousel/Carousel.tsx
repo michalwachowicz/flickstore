@@ -4,6 +4,7 @@ import CarouselButtons from "@/Components/carousel/CarouselButtons";
 interface Props {
   visibleCount: number;
   autoSlide?: number;
+  marginX?: number;
   onPrev?: () => void;
   onNext?: () => void;
   children: React.ReactNode | React.ReactNode[];
@@ -12,6 +13,7 @@ interface Props {
 const Carousel = ({
   visibleCount,
   autoSlide = -1,
+  marginX = 0,
   onPrev = () => {},
   onNext = () => {},
   children,
@@ -64,7 +66,7 @@ const Carousel = ({
     return () => {
       window.removeEventListener("resize", updateCarouselWidth);
     };
-  }, []);
+  }, [marginX]);
 
   const gapSize =
     0.5 * parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -73,21 +75,29 @@ const Carousel = ({
   const translateX = currentIndex * (childWidth + gapSize);
 
   return (
-    <div className="relative max-w-full overflow-hidden">
+    <div className="relative max-w-full">
       <div
-        ref={carouselRef}
-        data-testid="carousel"
-        className="flex gap-2 transition-transform duration-300 ease-in-out"
+        className="overflow-hidden"
         style={{
-          transform: `translateX(-${translateX}px)`,
+          marginLeft: `${marginX}rem`,
+          marginRight: `${marginX}rem`,
         }}
       >
-        {childArr.map((child, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={i} style={{ flex: `0 0 ${childWidth}px` }}>
-            {child}
-          </div>
-        ))}
+        <div
+          ref={carouselRef}
+          data-testid="carousel"
+          className="flex gap-2 transition-transform duration-300 ease-in-out"
+          style={{
+            transform: `translateX(-${translateX}px)`,
+          }}
+        >
+          {childArr.map((child, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={i} style={{ flex: `0 0 ${childWidth}px` }}>
+              {child}
+            </div>
+          ))}
+        </div>
       </div>
       <CarouselButtons onPrev={goPrev} onNext={goNext} />
     </div>
