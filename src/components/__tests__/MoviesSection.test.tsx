@@ -20,6 +20,13 @@ describe("<MoviesSection />", () => {
     expect(screen.queryByText(/see more/i)).not.toBeInTheDocument();
   });
 
+  it("renders nothing when movies array is empty", () => {
+    render(<MoviesSection title="Title" movies={[]} />);
+
+    expect(screen.queryByText("Title")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("carousel")).not.toBeInTheDocument();
+  });
+
   it("renders the see more button if genre is specified", () => {
     render(
       <MemoryRouter>
