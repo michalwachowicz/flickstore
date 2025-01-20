@@ -10,8 +10,10 @@ vi.mock("@/Components/carousel/Carousel", () => ({
 }));
 
 describe("<MoviesSection />", () => {
+  const mockMovies = [0, 1];
+
   it("renders correctly", () => {
-    render(<MoviesSection title="Title">test</MoviesSection>);
+    render(<MoviesSection title="Title" movies={mockMovies} />);
 
     expect(screen.getByText("Title")).toBeInTheDocument();
     expect(screen.getByTestId("carousel")).toBeInTheDocument();
@@ -21,9 +23,7 @@ describe("<MoviesSection />", () => {
   it("renders the see more button if genre is specified", () => {
     render(
       <MemoryRouter>
-        <MoviesSection title="Title" genreId={1}>
-          test
-        </MoviesSection>
+        <MoviesSection title="Title" genreId={1} movies={mockMovies} />
       </MemoryRouter>,
     );
 
@@ -37,9 +37,7 @@ describe("<MoviesSection />", () => {
           <Route
             path="/"
             element={
-              <MoviesSection title="Title" genreId={1}>
-                test
-              </MoviesSection>
+              <MoviesSection title="Title" genreId={1} movies={mockMovies} />
             }
           />
           <Route path="/genre/:id" element={<MockMoviePage />} />

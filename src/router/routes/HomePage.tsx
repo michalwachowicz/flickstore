@@ -4,7 +4,6 @@ import {
   getCachedTopRatedMovies,
 } from "../../managers/moviesManager";
 import Hero from "@/Components/hero/Hero";
-import MovieCard from "@/Components/MovieCard";
 import MoviesSection from "@/Components/MoviesSection";
 
 const HomePage = () => {
@@ -25,12 +24,12 @@ const HomePage = () => {
     <div>
       <Hero movies={popularMovies} />
       <div className="mx-auto my-10 flex max-w-5xl flex-col gap-10">
-        <MoviesSection title="Top Rated" visibleCount={{ sm: 1, md: 2, lg: 3 }}>
-          {topRatedMovies &&
-            topRatedMovies.map((movieId) => (
-              <MovieCard movieId={movieId} image="backdrop" />
-            ))}
-        </MoviesSection>
+        <MoviesSection
+          title="Top Rated"
+          visibleCount={{ sm: 1, md: 2, lg: 3 }}
+          movies={topRatedMovies}
+          imageType="backdrop"
+        />
       </div>
     </div>
   );

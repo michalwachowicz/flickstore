@@ -2,24 +2,29 @@
 import React, { ForwardedRef } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "@/Components/carousel/Carousel";
+import MovieCard from "@/Components/MovieCard";
 import ChevronIcon from "@/Assets/images/icons/chevron.svg?react";
 import VisibleCountObject from "../interfaces/VisibleCountObject";
 
 interface Props {
   title: string;
+  movies: number[];
   genreId?: number;
+  imageType?: "poster" | "backdrop";
   visibleCount?: number | VisibleCountObject;
-  children: React.ReactNode | React.ReactNode[];
 }
 
 const MoviesSection = React.forwardRef(
   (props: Props, ref: ForwardedRef<HTMLDivElement>) => {
     const {
       title,
+      movies,
       genreId = -1,
+      imageType = "poster",
       visibleCount = { sm: 2, md: 4, lg: 6 },
-      children,
     } = props;
+
+    if (movies.length === 0) return null;
 
     return (
       <section ref={ref}>
@@ -36,7 +41,9 @@ const MoviesSection = React.forwardRef(
           )}
         </div>
         <Carousel visibleCount={visibleCount} marginX={1.5}>
-          {children}
+          {movies.map((movieId) => (
+            <MovieCard key={movieId} movieId={movieId} image={imageType} />
+          ))}
         </Carousel>
       </section>
     );
