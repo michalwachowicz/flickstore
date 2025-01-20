@@ -57,6 +57,6 @@ const getGenreResults = async (genreId: GenreId, page: number = 1) => {
 };
 
 const getGenreList = () =>
-  Object.keys(genres).map((genreId) => parseInt(genreId, 10));
+  Object.keys(genres).map((genreId) => parseInt(genreId, 10) as GenreId);
 
 export { cache, getGenre, getGenreResults, getGenreList };
