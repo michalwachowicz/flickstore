@@ -17,7 +17,6 @@ describe("moviesManager", () => {
   const mockApiMovie: ApiMovie = {
     id: 1,
     title: "Test Movie",
-    original_title: "Test Movie Original",
     overview: "A test movie description",
     release_date: "2024-01-01",
     poster_path: "/poster.jpg",
@@ -56,7 +55,6 @@ describe("moviesManager", () => {
         {
           id: 2,
           title: "Similar Movie",
-          original_title: "Similar Movie Original",
           overview: "",
           genre_ids: [28],
           release_date: "2023-01-01",
@@ -69,7 +67,7 @@ describe("moviesManager", () => {
 
   const mockMovie: Movie = {
     id: 1,
-    title: "Test Movie Original",
+    title: "Test Movie",
     releaseDate: "2024-01-01",
     images: {
       poster: "/poster.jpg",
@@ -115,7 +113,7 @@ describe("moviesManager", () => {
       setMovie(mockApiMovie.id, mockApiMovie);
       expect(getMovie(2)).toEqual({
         id: 2,
-        title: "Similar Movie Original",
+        title: "Similar Movie",
         description: "",
         releaseDate: "2023-01-01",
         images: {
@@ -143,7 +141,6 @@ describe("moviesManager", () => {
         {
           id: 0,
           title: "Movie 1",
-          original_title: "Movie 1 Original",
           overview: "",
           release_date: "2023-01-01",
           poster_path: "/poster0.jpg",
@@ -152,7 +149,6 @@ describe("moviesManager", () => {
         {
           id: 1,
           title: "Movie 2",
-          original_title: "Movie 2 Original",
           overview: "",
           release_date: "2023-01-01",
           poster_path: "/poster0.jpg",
