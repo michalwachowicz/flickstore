@@ -1,4 +1,9 @@
-import { cache, getGenre, getGenreResults } from "../genresManager";
+import {
+  cache,
+  getGenre,
+  getGenreList,
+  getGenreResults,
+} from "../genresManager";
 import { getMoviesByGenre } from "../../api/moviesApi";
 
 vi.mock("../../api/moviesApi", () => ({
@@ -9,6 +14,15 @@ describe("genresManager", () => {
   describe("getGenre()", () => {
     it("returns genre name properly", () => {
       expect(getGenre(27)).toBe("Horror");
+    });
+  });
+
+  describe("getGenreList()", () => {
+    it("returns a list of genre ids", () => {
+      const list = getGenreList();
+
+      expect(list.length).toBeGreaterThan(0);
+      expect(list).toContain(28);
     });
   });
 
