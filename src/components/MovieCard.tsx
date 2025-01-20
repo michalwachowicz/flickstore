@@ -35,7 +35,7 @@ const MovieCard = ({ movieId, image }: Props) => {
         alt={`${movie.title}`}
         className="rounded-t-lg"
       />
-      <div className="flex flex-1 flex-col justify-between px-3 py-6">
+      <div className="flex flex-1 flex-col justify-between gap-4 px-3 py-6">
         <div className="text-lg font-bold text-neutral-50">{movie.title}</div>
         <AddToCartButton movieId={movieId} onClick={handleAddToCartClick} />
       </div>
