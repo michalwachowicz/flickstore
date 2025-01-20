@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import CarouselButtons from "@/Components/carousel/CarouselButtons";
 import VisibleCountObject from "../../interfaces/VisibleCountObject";
+import getBreakpointValue from "../../utils/mediaQueryUtils";
 
 interface Props {
   visibleCount: number | VisibleCountObject;
@@ -10,24 +11,6 @@ interface Props {
   onNext?: () => void;
   children: React.ReactNode | React.ReactNode[];
 }
-
-const getBreakpointValue = (visibleCount: VisibleCountObject): number => {
-  const breakpoints: { query: string; key: keyof VisibleCountObject }[] = [
-    { query: "(min-width: 1280px)", key: "xl" },
-    { query: "(min-width: 1024px)", key: "lg" },
-    { query: "(min-width: 768px)", key: "md" },
-    { query: "(min-width: 640px)", key: "sm" },
-  ];
-
-  for (let i = 0; i < breakpoints.length; i += 1) {
-    const { query, key } = breakpoints[i];
-    const count = visibleCount[key];
-
-    if (window.matchMedia(query).matches && count !== undefined) return count;
-  }
-
-  return visibleCount.sm || 1;
-};
 
 const Carousel = ({
   visibleCount,
