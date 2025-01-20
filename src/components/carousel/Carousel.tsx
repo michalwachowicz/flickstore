@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import CarouselButtons from "@/Components/carousel/CarouselButtons";
-
-type VisibleCountObject = {
-  sm?: number;
-  md?: number;
-  lg?: number;
-  xl?: number;
-};
+import VisibleCountObject from "../../interfaces/VisibleCountObject";
 
 interface Props {
   visibleCount: number | VisibleCountObject;
