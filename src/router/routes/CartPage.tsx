@@ -54,8 +54,8 @@ const CartPage = () => {
         </div>
       )}
       {!isEmpty && (
-        <div className="mt-10 flex flex-col gap-10 md:flex-row md:gap-12 lg:gap-28">
-          <ul className="flex-1">
+        <div className="mt-10 flex flex-col gap-10 md:flex-row md:items-start md:gap-12 lg:gap-28">
+          <ul className="flex flex-1 flex-col gap-6">
             {cart.map((movieId) => (
               <ListItemButton key={movieId} movie={getMovie(movieId)} />
             ))}
