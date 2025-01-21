@@ -1,0 +1,7 @@
+.wrapper {
+  $pad: 1.5rem;
+
+  max-width: calc(64rem + ($pad * 2));
+  padding: 2.5rem $pad;
+  margin: 0 auto;
+}
