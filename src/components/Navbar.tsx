@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Logo from "@/Assets/images/logo/logo.svg?react";
 import SearchIcon from "@/Assets/images/icons/search.svg?react";
 import CartIcon from "@/Assets/images/icons/cart.svg?react";
@@ -20,13 +21,9 @@ const Navbar = ({ isSearchOpen = false, onSearchOpen = () => {} }: Props) => {
   return (
     <nav className="fixed inset-x-0 top-0 z-10 w-full bg-neutral-950 p-6 shadow-xl">
       <div className="mx-auto flex max-w-5xl items-center justify-between">
-        <button
-          className="max-w-36"
-          type="button"
-          aria-label="Go to the homepage"
-        >
+        <Link to="/" className="max-w-36" aria-label="Homepage">
           <Logo className="h-auto w-full" />
-        </button>
+        </Link>
 
         <div className="relative flex gap-4">
           <IconButton

@@ -1,4 +1,5 @@
 import { act } from "react";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { useCart } from "../../contexts/CartContext";
@@ -27,11 +28,13 @@ describe("<Navbar />", () => {
   });
 
   it("renders all buttons properly", () => {
-    render(<Navbar />);
+    render(
+      <MemoryRouter>
+        <Navbar />
+      </MemoryRouter>,
+    );
 
-    expect(
-      screen.getByRole("button", { name: /go to the homepage/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /homepage/i })).toBeInTheDocument();
 
     expect(
       screen.getByRole("button", { name: /open search bar/i }),
@@ -43,12 +46,21 @@ describe("<Navbar />", () => {
   });
 
   it("applies correct aria-expanded value on search button", () => {
-    const { rerender } = render(<Navbar isSearchOpen={false} />);
+    const { rerender } = render(
+      <MemoryRouter>
+        <Navbar isSearchOpen={false} />
+      </MemoryRouter>,
+    );
+
     expect(
       screen.getByRole("button", { name: /open search bar/i }),
     ).toHaveAttribute("aria-expanded", "false");
 
-    rerender(<Navbar isSearchOpen />);
+    rerender(
+      <MemoryRouter>
+        <Navbar isSearchOpen />
+      </MemoryRouter>,
+    );
     expect(
       screen.getByRole("button", { name: /open search bar/i }),
     ).toHaveAttribute("aria-expanded", "true");
@@ -56,7 +68,11 @@ describe("<Navbar />", () => {
 
   it("opens the search box on search button click", async () => {
     const fn = vi.fn();
-    render(<Navbar onSearchOpen={fn} />);
+    render(
+      <MemoryRouter>
+        <Navbar onSearchOpen={fn} />
+      </MemoryRouter>,
+    );
 
     const user = userEvent.setup();
     await act(async () => {
@@ -70,7 +86,11 @@ describe("<Navbar />", () => {
   });
 
   it("opens the cart popup on button click", async () => {
-    render(<Navbar />);
+    render(
+      <MemoryRouter>
+        <Navbar />
+      </MemoryRouter>,
+    );
 
     expect(screen.queryByTestId("cart-popup")).not.toBeInTheDocument();
 
@@ -83,7 +103,11 @@ describe("<Navbar />", () => {
   });
 
   it("changes cart button title", async () => {
-    render(<Navbar />);
+    render(
+      <MemoryRouter>
+        <Navbar />
+      </MemoryRouter>,
+    );
 
     const user = userEvent.setup();
     const openBtn = screen.getByRole("button", { name: /open cart/i });
@@ -102,15 +126,43 @@ describe("<Navbar />", () => {
   });
 
   it("shows the cart navbar icon items count", () => {
-    const { rerender } = render(<Navbar />);
+    const { rerender } = render(
+      <MemoryRouter>
+        <Navbar />
+      </MemoryRouter>,
+    );
 
     expect(screen.queryByTestId("cart-icon-count")).not.toBeInTheDocument();
     mockUseCart.mockReturnValueOnce([0, 1, 3]);
 
-    rerender(<Navbar />);
+    rerender(
+      <MemoryRouter>
+        <Navbar />
+      </MemoryRouter>,
+    );
 
     const cartCount = screen.getByTestId("cart-icon-count");
     expect(cartCount).toBeInTheDocument();
     expect(cartCount.textContent).toEqual("3");
+  });
+
+  it("navigates to homepage on logo click", async () => {
+    render(
+      <MemoryRouter initialEntries={["/nav"]}>
+        <Routes>
+          <Route path="/nav" element={<Navbar />} />
+          <Route path="/" element={<div data-testid="homepage" />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(screen.queryByTestId("homepage")).not.toBeInTheDocument();
+
+    const user = userEvent.setup();
+    await act(async () => {
+      await user.click(screen.getByRole("link", { name: /homepage/i }));
+    });
+
+    expect(screen.getByTestId("homepage")).toBeInTheDocument();
   });
 });
