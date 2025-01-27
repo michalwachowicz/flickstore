@@ -3,6 +3,7 @@ import {
   getGenre,
   getGenreList,
   getGenreResults,
+  getGenreTotals,
 } from "../genresManager";
 import { getMoviesByGenre } from "../../api/moviesApi";
 
@@ -23,6 +24,18 @@ describe("genresManager", () => {
 
       expect(list.length).toBeGreaterThan(0);
       expect(list).toContain(28);
+    });
+  });
+
+  describe("getGenreTotals()", () => {
+    it("returns genre total info", () => {
+      cache[28] = { totalPages: 2, totalResults: 40, pages: [] };
+
+      expect(getGenreTotals(28)).toEqual({ totalPages: 2, totalResults: 40 });
+    });
+
+    it("returns empty total info if genre info does not exist", () => {
+      expect(getGenreTotals(80)).toEqual({ totalPages: 0, totalResults: 0 });
     });
   });
 

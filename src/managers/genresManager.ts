@@ -56,7 +56,14 @@ const getGenreResults = async (genreId: GenreId, page: number = 1) => {
   return cache[genreId].pages[page].map((result) => getMovie(result));
 };
 
+const getGenreTotals = (genreId: GenreId) => {
+  if (!cache[genreId]) return { totalPages: 0, totalResults: 0 };
+
+  const { totalPages, totalResults } = cache[genreId];
+  return { totalPages, totalResults };
+};
+
 const getGenreList = () =>
   Object.keys(genres).map((genreId) => parseInt(genreId, 10) as GenreId);
 
-export { cache, getGenre, getGenreResults, getGenreList };
+export { cache, getGenre, getGenreResults, getGenreList, getGenreTotals };
