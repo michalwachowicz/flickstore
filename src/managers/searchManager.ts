@@ -7,6 +7,13 @@ import { getMovie, getPageArrayFromResults } from "./moviesManager";
 // Exported for testing only
 export const cache: { [key: string]: SearchQuery } = {};
 
+export const getSearchTotals = (query: string) => {
+  if (!cache[query]) return { totalPages: 0, totalResults: 0 };
+
+  const { totalPages, totalResults } = cache[query];
+  return { totalPages, totalResults };
+};
+
 export default async function getSearchResults(
   query: string,
   page: number = 1,

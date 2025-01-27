@@ -1,4 +1,4 @@
-import getSearchResults, { cache } from "../searchManager";
+import getSearchResults, { cache, getSearchTotals } from "../searchManager";
 import { querySearch } from "../../api/moviesApi";
 
 vi.mock("../../api/moviesApi", () => ({
@@ -155,6 +155,24 @@ describe("searchManager", () => {
         expect(cache["spider man"]).toBeUndefined();
 
         expect(mockedQuerySearch).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+
+  describe("getSearchTotals()", () => {
+    it("returns genre total info", () => {
+      cache.test = { totalPages: 2, totalResults: 40, pages: [] };
+
+      expect(getSearchTotals("test")).toEqual({
+        totalPages: 2,
+        totalResults: 40,
+      });
+    });
+
+    it("returns empty total info if genre info does not exist", () => {
+      expect(getSearchTotals("test 2")).toEqual({
+        totalPages: 0,
+        totalResults: 0,
       });
     });
   });
