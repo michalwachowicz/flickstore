@@ -3,6 +3,7 @@ import MainPage from "./routes/MainPage";
 import ErrorPage from "./routes/ErrorPage";
 import HomePage from "./routes/HomePage";
 import CartPage from "./routes/CartPage";
+import SearchPage from "./routes/SearchPage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,14 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <CartPage />,
+      },
+      {
+        path: "/search/:query/:page",
+        element: <SearchPage type="search" />,
+      },
+      {
+        path: "/genre/:query/:page",
+        element: <SearchPage type="genre" />,
       },
     ],
   },
