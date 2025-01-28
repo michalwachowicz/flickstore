@@ -3,6 +3,20 @@ import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import PageIndicator from "@/Components/PageIndicator";
 
+vi.mock("@/Components/button/PageButton", () => ({
+  default: ({
+    page,
+    onClick = () => {},
+  }: {
+    page: number;
+    onClick?: (num: number) => void;
+  }) => (
+    <button type="button" onClick={() => onClick(page)}>
+      {page}
+    </button>
+  ),
+}));
+
 describe("<PageIndicator />", () => {
   it("shows the number of movies on page and total movies", () => {
     render(
@@ -11,6 +25,8 @@ describe("<PageIndicator />", () => {
         totalMovies={78}
         currentPage={1}
         totalPages={2}
+        type="search"
+        query="test"
       />,
     );
 
@@ -24,6 +40,8 @@ describe("<PageIndicator />", () => {
         totalMovies={78}
         currentPage={1}
         totalPages={1}
+        type="search"
+        query="test"
       />,
     );
 
@@ -37,6 +55,8 @@ describe("<PageIndicator />", () => {
         totalMovies={78}
         currentPage={3}
         totalPages={2}
+        type="search"
+        query="test"
       />,
     );
 
@@ -50,6 +70,8 @@ describe("<PageIndicator />", () => {
         totalMovies={78}
         currentPage={1}
         totalPages={5}
+        type="search"
+        query="test"
       />,
     );
 
@@ -67,6 +89,8 @@ describe("<PageIndicator />", () => {
         totalMovies={78}
         currentPage={2}
         totalPages={12}
+        type="search"
+        query="test"
       />,
     );
 
@@ -91,6 +115,8 @@ describe("<PageIndicator />", () => {
         totalMovies={78}
         currentPage={5}
         totalPages={12}
+        type="search"
+        query="test"
       />,
     );
 
@@ -118,6 +144,8 @@ describe("<PageIndicator />", () => {
         totalMovies={78}
         currentPage={10}
         totalPages={12}
+        type="search"
+        query="test"
       />,
     );
 
@@ -143,6 +171,8 @@ describe("<PageIndicator />", () => {
         totalMovies={78}
         currentPage={10}
         totalPages={12}
+        type="search"
+        query="test"
         onPageChange={fn}
       />,
     );

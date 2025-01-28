@@ -6,6 +6,8 @@ interface Props {
   totalMovies: number;
   currentPage: number;
   totalPages: number;
+  query: string;
+  type: "search" | "genre";
   onPageChange?: (page: number) => void;
 }
 
@@ -14,6 +16,8 @@ const PageIndicator = ({
   totalMovies,
   currentPage,
   totalPages,
+  query,
+  type,
   onPageChange = () => {},
 }: Props) => {
   if (totalPages <= 1 || currentPage > totalPages) return null;
@@ -23,7 +27,7 @@ const PageIndicator = ({
 
     if (totalPages <= maxDisplayedPages) {
       return (
-        <div className="rounded border border-amber-400">
+        <div className="flex rounded border border-amber-400">
           {Array.from({ length: totalPages }).map((_, i) => {
             const num = i + 1;
             return (
@@ -31,6 +35,8 @@ const PageIndicator = ({
                 key={num}
                 page={num}
                 isActive={currentPage === num}
+                query={query}
+                type={type}
                 onClick={onPageChange}
               />
             );
@@ -58,12 +64,14 @@ const PageIndicator = ({
     const addNumberSection = (key: string) => {
       if (numberGroup.length > 0) {
         groupedPages.push(
-          <div key={key} className="rounded border border-amber-400">
+          <div key={key} className="flex rounded border border-amber-400">
             {numberGroup.map((num) => (
               <PageButton
                 key={num}
                 page={num}
                 isActive={currentPage === num}
+                query={query}
+                type={type}
                 onClick={onPageChange}
               />
             ))}
