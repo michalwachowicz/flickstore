@@ -1,5 +1,5 @@
 import { act } from "react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes, useParams } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import Search from "@/Components/Search";
@@ -124,5 +124,49 @@ describe("<Search />", () => {
     expect(
       screen.getByRole("button", { name: /see more results/i }),
     ).toBeInTheDocument();
+  });
+
+  it("routes to a search results page and closes a search box", async () => {
+    const MockSearchPage = () => {
+      const { query, page } = useParams();
+
+      return (
+        <div data-testid="search-page">
+          {query} {page}
+        </div>
+      );
+    };
+    const fn = vi.fn();
+
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Routes>
+          <Route path="/" element={<Search onClose={fn} />} />
+          <Route path="/search/:query/:page" element={<MockSearchPage />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(fn).toHaveBeenCalledTimes(0);
+    expect(screen.queryByTestId("search-page")).not.toBeInTheDocument();
+
+    const user = userEvent.setup();
+    await act(async () => {
+      await user.keyboard("test");
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      });
+    });
+
+    await act(async () => {
+      await user.click(
+        screen.getByRole("button", { name: /see more results/i }),
+      );
+    });
+
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("search-page")).toBeInTheDocument();
+    expect(screen.getByText(/test 1/i)).toBeInTheDocument();
   });
 });
