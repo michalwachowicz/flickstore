@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import MoviesSection from "@/Components/MoviesSection";
-import MockMoviePage from "@/Components/mocks/MockMoviePage";
+import MockSearchPage from "@/Components/mocks/MockSearchPage";
 
 vi.mock("@/Components/carousel/Carousel", () => ({
   default: () => <div data-testid="carousel" />,
@@ -47,20 +47,20 @@ describe("<MoviesSection />", () => {
               <MoviesSection title="Title" genreId={1} movies={mockMovies} />
             }
           />
-          <Route path="/genre/:id" element={<MockMoviePage />} />
+          <Route path="/genre/:query/:page" element={<MockSearchPage />} />
         </Routes>
       </MemoryRouter>,
     );
 
     expect(screen.queryByTestId("movie-page")).not.toBeInTheDocument();
-    expect(screen.queryByText(/1/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/1 1/)).not.toBeInTheDocument();
 
     const user = userEvent.setup();
     await act(async () => {
       await user.click(screen.getByText(/see more/i));
     });
 
-    expect(screen.getByTestId("movie-page")).toBeInTheDocument();
-    expect(screen.getByText(/1/)).toBeInTheDocument();
+    expect(screen.getByTestId("search-page")).toBeInTheDocument();
+    expect(screen.getByText(/1 1/)).toBeInTheDocument();
   });
 });

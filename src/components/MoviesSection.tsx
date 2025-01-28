@@ -32,7 +32,7 @@ const MoviesSection = React.forwardRef(
           <h2 className="text-2xl font-bold text-amber-400">{title}</h2>
           {genreId !== -1 && (
             <Link
-              to={`/genre/${genreId}`}
+              to={`/genre/${genreId}/1`}
               className="flex items-center gap-1 text-neutral-500"
             >
               See more{" "}
