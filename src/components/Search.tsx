@@ -79,7 +79,7 @@ const Search = ({ onClose = () => {} }: Props) => {
             </ul>
             <Link
               className="mt-6 flex w-full items-center justify-center rounded-lg bg-amber-400 p-4 text-2xl font-bold text-neutral-950"
-              to={`/search/${debouncedQuery.replace(" ", "%20")}`}
+              to={`/search/${debouncedQuery.replace(" ", "%20")}/1`}
               role="button"
             >
               See More Results
