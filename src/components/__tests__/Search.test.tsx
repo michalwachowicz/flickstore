@@ -1,8 +1,9 @@
 import { act } from "react";
-import { MemoryRouter, Route, Routes, useParams } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import Search from "@/Components/Search";
+import MockSearchPage from "@/Components/mocks/MockSearchPage";
 
 vi.mock("../../managers/searchManager", () => ({
   default: () =>
@@ -127,15 +128,6 @@ describe("<Search />", () => {
   });
 
   it("routes to a search results page and closes a search box", async () => {
-    const MockSearchPage = () => {
-      const { query, page } = useParams();
-
-      return (
-        <div data-testid="search-page">
-          {query} {page}
-        </div>
-      );
-    };
     const fn = vi.fn();
 
     render(
