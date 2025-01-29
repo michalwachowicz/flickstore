@@ -62,7 +62,7 @@ const createMovieFromApi = (apiMovie: ApiMovie): Movie => {
         ({ site, name }) =>
           site === "YouTube" && name.toLowerCase().includes("trailer"),
       ) || apiMovie.videos?.results[0]
-    )?.id,
+    )?.key,
     genres:
       apiMovie.genre_ids || apiMovie.genres?.map((genre) => genre.id) || [],
     similar: similarIds,
@@ -120,6 +120,18 @@ const getCachedTopRatedMovies = async () => {
   return topRatedMovies;
 };
 
+const addBackdrops = (
+  id: number,
+  response: { backdrops: { file_path: string }[] },
+) => {
+  if (!cache[id]) return;
+
+  const { backdrops } = response;
+  if (backdrops.length === 0) return;
+
+  cache[id].images.backdrops = backdrops.map((backdrop) => backdrop.file_path);
+};
+
 export {
   getMovie,
   setMovie,
@@ -127,4 +139,5 @@ export {
   getCachedPopularMovies,
   getCachedTopRatedMovies,
   isFullMovie,
+  addBackdrops,
 };

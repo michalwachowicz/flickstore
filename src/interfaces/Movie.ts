@@ -10,7 +10,7 @@ export interface ApiMovie {
   runtime?: number;
   videos?: {
     results: {
-      id: string;
+      key: string;
       site: string;
       name: string;
     }[];
