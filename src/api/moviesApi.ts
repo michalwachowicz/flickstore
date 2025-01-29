@@ -38,7 +38,7 @@ const getMovieDetails = async (
   if (options?.videos) params.push("videos");
   if (options?.similar) params.push("similar");
 
-  if (params.length > 0) url += `?append_to_response=${params.join("%2C")}`;
+  if (params.length > 0) url += `&append_to_response=${params.join("%2C")}`;
 
   return requestData(url);
 };
