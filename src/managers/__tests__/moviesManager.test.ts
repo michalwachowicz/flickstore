@@ -1,9 +1,10 @@
-import { afterEach, beforeEach, MockedFunction } from "vitest";
+import { afterEach, beforeEach, expect, MockedFunction } from "vitest";
 import { ApiMovie, Movie } from "../../interfaces/Movie";
 import {
   getCachedPopularMovies,
   getCachedTopRatedMovies,
   getMovie,
+  isFullMovie,
   setMovie,
 } from "../moviesManager";
 import { getPopularMovies, getTopRatedMovies } from "../../api/moviesApi";
@@ -133,6 +134,30 @@ describe("moviesManager", () => {
   describe("getMovie()", () => {
     it("returns undefined if a movie is not cached", () =>
       expect(getMovie(999)).toBeUndefined());
+  });
+
+  describe("isFullMovie()", () => {
+    it("returns false if movie does not exist", () => {
+      expect(isFullMovie(999)).toBe(false);
+    });
+
+    it("returns false if some properties do not exist", () => {
+      setMovie(3, {
+        id: 3,
+        title: "test",
+        images: { poster: "test.jpg", backdrops: ["backdrop.jpg"] },
+        description: "A test movie description",
+        releaseDate: "2023-01-01",
+      } as Movie);
+
+      expect(isFullMovie(3)).toBe(false);
+    });
+
+    it("returns true if movie has all properties", () => {
+      setMovie(0, mockMovie);
+
+      expect(isFullMovie(0)).toBe(true);
+    });
   });
 
   describe("cached functions", () => {

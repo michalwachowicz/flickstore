@@ -10,6 +10,24 @@ let topRatedMovies: number[] = [];
 
 const getMovie = (id: number) => cache[id];
 
+const isFullMovie = (id: number) => {
+  const movie = cache[id];
+  if (!movie) return false;
+
+  return (
+    movie.description !== undefined &&
+    movie.runtime !== undefined &&
+    movie.genres !== undefined &&
+    movie.genres.length > 0 &&
+    movie.similar !== undefined &&
+    movie.similar.length > 0 &&
+    movie.video !== undefined &&
+    movie.credits !== undefined &&
+    movie.credits.cast.length > 0 &&
+    movie.credits.crew.length > 0
+  );
+};
+
 const isMovie = (movie: unknown): movie is Movie =>
   typeof movie === "object" && movie !== null && !("overview" in movie);
 
@@ -108,4 +126,5 @@ export {
   getPageArrayFromResults,
   getCachedPopularMovies,
   getCachedTopRatedMovies,
+  isFullMovie,
 };
