@@ -55,7 +55,7 @@ const MoviePage = () => {
                   <div className="absolute bottom-4 left-4 flex items-center gap-3 text-xl font-bold text-neutral-50">
                     <div className="relative rounded-full border-2 border-neutral-50">
                       <PlayIcon className="relative z-10 h-10 w-10 p-1 [&>path]:fill-neutral-50" />
-                      <div className="absolute inset-0 bg-neutral-950 opacity-25" />
+                      <div className="absolute inset-0 rounded-full bg-neutral-950 opacity-25" />
                     </div>
                     Play trailer on YouTube
                   </div>
