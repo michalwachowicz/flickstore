@@ -4,6 +4,7 @@ import ErrorPage from "./routes/ErrorPage";
 import HomePage from "./routes/HomePage";
 import CartPage from "./routes/CartPage";
 import SearchPage from "./routes/SearchPage";
+import MoviePage from "./routes/MoviePage";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/genre/:query/:page",
         element: <SearchPage type="genre" />,
+      },
+      {
+        path: "/movie/:id",
+        element: <MoviePage />,
       },
     ],
   },
