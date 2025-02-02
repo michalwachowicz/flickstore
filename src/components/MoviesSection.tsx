@@ -30,7 +30,7 @@ const MoviesSection = React.forwardRef(
       <section ref={ref}>
         <SectionHeader title={title} route={route} marginX={6} />
         <Carousel visibleCount={visibleCount} marginX={1.5}>
-          {movies.map((movieId) => (
+          {movies.slice(0, 18).map((movieId) => (
             <MovieCard key={movieId} movieId={movieId} image={imageType} />
           ))}
         </Carousel>
