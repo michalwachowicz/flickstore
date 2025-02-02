@@ -5,6 +5,7 @@ import HomePage from "./routes/HomePage";
 import CartPage from "./routes/CartPage";
 import SearchPage from "./routes/SearchPage";
 import MoviePage from "./routes/MoviePage";
+import CastPage from "./routes/CastPage";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/movie/:id",
         element: <MoviePage />,
+      },
+      {
+        path: "/cast/:id",
+        element: <CastPage />,
       },
     ],
   },
