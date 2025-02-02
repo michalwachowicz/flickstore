@@ -14,7 +14,7 @@ const CreditListItem = ({ member }: { member: CrewMember | CastMember }) => {
   return (
     <li className="flex items-center gap-4">
       <ProfilePicture
-        image={member.image ? getImageUrl(member.image) : undefined}
+        image={member.image ? getImageUrl(member.image, 185) : undefined}
         alt={member.name}
       />
       <div>
