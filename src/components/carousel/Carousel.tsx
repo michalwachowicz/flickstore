@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import CarouselButtons from "@/Components/carousel/CarouselButtons";
+import CarouselButton from "@/Components/carousel/CarouselButton";
 import VisibleCountObject from "../../interfaces/VisibleCountObject";
 import getBreakpointValue from "../../utils/mediaQueryUtils";
 
@@ -102,6 +102,7 @@ const Carousel = ({
 
   return (
     <div className="relative max-w-full">
+      <CarouselButton onClick={goPrev} flipped />
       <div
         className="overflow-hidden"
         style={{
@@ -125,7 +126,7 @@ const Carousel = ({
           ))}
         </div>
       </div>
-      <CarouselButtons onPrev={goPrev} onNext={goNext} />
+      <CarouselButton onClick={goNext} />
     </div>
   );
 };
