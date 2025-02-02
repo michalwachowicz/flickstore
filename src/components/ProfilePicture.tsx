@@ -23,6 +23,7 @@ const ProfilePicture = ({
         src={image}
         alt={alt}
         className="h-full w-full rounded-lg object-cover"
+        loading="lazy"
       />
     )}
     {!image && (

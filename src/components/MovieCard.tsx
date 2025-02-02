@@ -34,6 +34,7 @@ const MovieCard = ({ movieId, image }: Props) => {
         src={getImageUrl(img)}
         alt={`${movie.title}`}
         className="rounded-t-lg"
+        loading="lazy"
       />
       <div className="flex flex-1 flex-col justify-between gap-4 px-3 py-6">
         <div className="text-lg font-bold text-neutral-50">{movie.title}</div>

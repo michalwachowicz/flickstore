@@ -36,7 +36,7 @@ const CastPage = () => {
       <Link to={`/movie/${id}`} className="flex items-center gap-6">
         <img
           src={getImageUrl(movie.images.poster, 154)}
-          alt=""
+          alt={movie.title}
           className="w-32 rounded-lg"
         />
         <h1 className="text-2xl font-bold text-neutral-200">

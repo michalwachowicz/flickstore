@@ -42,8 +42,9 @@ const MoviePage = () => {
                 >
                   <img
                     src={getImageUrl(backdrop, backdropWidth)}
-                    alt=""
+                    alt={movie.title}
                     className="h-full w-full rounded-lg object-cover"
+                    loading="lazy"
                   />
                   <div className="absolute bottom-4 left-4 flex items-center gap-3 text-xl font-bold text-neutral-50">
                     <div className="relative rounded-full border-2 border-neutral-50">
@@ -57,8 +58,9 @@ const MoviePage = () => {
                 <img
                   key={backdrop}
                   src={getImageUrl(backdrop, backdropWidth)}
-                  alt=""
+                  alt={movie.title}
                   className="h-full w-full rounded-lg object-cover"
+                  loading="lazy"
                 />
               ),
             )}
@@ -101,6 +103,7 @@ const MoviePage = () => {
                     src={getImageUrl(crew.image!, 300)}
                     alt={crew.name}
                     className="w-full rounded-lg"
+                    loading="lazy"
                   />
                   <div>
                     <h3 className="text-lg font-bold text-neutral-200">
