@@ -9,13 +9,14 @@ import ListItemButton from "@/Components/button/ListItemButton";
 import useFullMovie from "../../hooks/fullMovieHook";
 import useWindowSize from "../../hooks/windowSize";
 import getBackdropWidth from "../../utils/backdropUtils";
+import LoadingScreen from "@/Components/LoadingScreen";
 
 const MoviePage = () => {
   const { numId: id, movie, loading } = useFullMovie();
   const { windowWidth } = useWindowSize();
   const backdropWidth = getBackdropWidth(windowWidth);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingScreen />;
   if (id === -1 || !movie) throw new Error(`No movie found: ${id}`);
 
   return (

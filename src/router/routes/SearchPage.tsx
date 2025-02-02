@@ -18,6 +18,7 @@ import {
   getGenreTotals,
 } from "../../managers/genresManager";
 import { Movie } from "../../interfaces/Movie";
+import LoadingScreen from "@/Components/LoadingScreen";
 
 const SearchPage = ({ type }: { type: "search" | "genre" }) => {
   const { query, page } = useParams();
@@ -28,9 +29,12 @@ const SearchPage = ({ type }: { type: "search" | "genre" }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [totalMovies, setTotalMovies] = useState(0);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const updateMovies = async () => {
+      setLoading(true);
+
       const currentPage = parseInt(page || "1", 10);
       let moviesArr: Movie[];
       let totals: { totalPages: number; totalResults: number };
@@ -48,6 +52,7 @@ const SearchPage = ({ type }: { type: "search" | "genre" }) => {
       setMovies(moviesArr);
       setTotalPages(totals.totalPages);
       setTotalMovies(totals.totalResults);
+      setLoading(false);
     };
 
     updateMovies();
@@ -57,6 +62,7 @@ const SearchPage = ({ type }: { type: "search" | "genre" }) => {
     window.scrollTo(0, 0);
   };
 
+  if (loading) return <LoadingScreen />;
   if (!query) return null;
 
   return (

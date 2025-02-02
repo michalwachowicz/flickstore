@@ -3,6 +3,7 @@ import useFullMovie from "../../hooks/fullMovieHook";
 import { getImageUrl } from "../../api/moviesApi";
 import { CrewMember } from "../../interfaces/Credit";
 import CreditListItem from "@/Components/CreditListItem";
+import LoadingScreen from "@/Components/LoadingScreen";
 
 const SectionTitle = ({ title, length }: { title: string; length: number }) => (
   <h2 className="flex items-center gap-2 text-2xl font-bold text-amber-400">
@@ -14,7 +15,7 @@ const SectionTitle = ({ title, length }: { title: string; length: number }) => (
 const CastPage = () => {
   const { numId: id, movie, loading } = useFullMovie();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingScreen />;
   if (id === -1 || !movie) throw new Error(`No movie found: ${id}`);
 
   const departments: { [key: string]: [CrewMember] } = {};
