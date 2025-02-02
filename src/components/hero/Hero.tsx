@@ -1,13 +1,7 @@
 import useWindowSize from "../../hooks/windowSize";
 import Carousel from "@/Components/carousel/Carousel";
 import HeroCard from "@/Components/hero/HeroCard";
-
-const getBackdropWidth = (windowWidth: number) => {
-  if (windowWidth <= 300) return 300;
-  if (windowWidth <= 780) return 780;
-
-  return 1280;
-};
+import getBackdropWidth from "../../utils/backdropUtils";
 
 interface Props {
   movies: number[];
