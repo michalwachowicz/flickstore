@@ -25,8 +25,8 @@ describe("moviesManager", () => {
     runtime: 120,
     videos: {
       results: [
-        { id: "vid1", site: "YouTube", name: "Test Trailer" },
-        { id: "vid2", site: "Vimeo", name: "Another Video" },
+        { key: "vid1", site: "YouTube", name: "Test Trailer" },
+        { key: "vid2", site: "Vimeo", name: "Another Video" },
       ],
     },
     genre_ids: [28, 12],
