@@ -31,7 +31,7 @@ const MovieCard = ({ movieId, image }: Props) => {
       className="flex h-full flex-col rounded-lg bg-neutral-800 shadow"
     >
       <img
-        src={getImageUrl(img)}
+        src={getImageUrl(img, image === "backdrop" ? 780 : 342)}
         alt={`${movie.title}`}
         className="rounded-t-lg"
         loading="lazy"
