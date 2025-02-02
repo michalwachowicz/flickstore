@@ -12,9 +12,7 @@ const MainPage = () => {
   const navbarHeight = "5.25rem";
 
   const searchCloseHandler = () => {
-    if (searchBtn === null) return;
-
-    searchBtn.focus();
+    if (searchBtn !== null) searchBtn.focus();
     setSearchBtn(null);
   };
 
