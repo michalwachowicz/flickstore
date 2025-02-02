@@ -1,5 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, Dispatch, useContext, useReducer } from "react";
+import { getMovieDetails } from "../api/moviesApi";
+import { setMovie } from "../managers/moviesManager";
 
 interface CartAction {
   type: "added" | "deleted" | "cleared";
@@ -11,12 +13,22 @@ const CartDispatchContext = createContext<Dispatch<CartAction>>(() => {});
 
 const cartReducer = (cart: number[], action: CartAction) => {
   switch (action.type) {
-    case "added":
+    case "added": {
       if (action.id === undefined) return cart;
-      return [...cart, action.id];
-    case "deleted":
+
+      const list = [...cart, action.id];
+      localStorage.setItem("cart", JSON.stringify(list));
+
+      return list;
+    }
+    case "deleted": {
       if (action.id === undefined) return cart;
-      return cart.filter((id) => id !== action.id);
+
+      const list = cart.filter((id) => id !== action.id);
+      localStorage.setItem("cart", JSON.stringify(list));
+
+      return list;
+    }
     case "cleared":
       return [];
     default:
@@ -28,7 +40,19 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartDispatchContext);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, dispatch] = useReducer(cartReducer, []);
+  const [cart, dispatch] = useReducer(
+    cartReducer,
+    JSON.parse(localStorage.getItem("cart") || "[]"),
+  );
+
+  (async () => {
+    await Promise.all(
+      cart.map(async (id) => {
+        const data = await getMovieDetails(id);
+        setMovie(id, data);
+      }),
+    );
+  })();
 
   return (
     <CartContext.Provider value={cart}>
