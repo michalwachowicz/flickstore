@@ -118,12 +118,22 @@ const Carousel = ({
             transform: `translateX(-${translateX}px)`,
           }}
         >
-          {childArr.map((child, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={i} style={{ flex: `0 0 ${childWidth}px` }}>
-              {child}
-            </div>
-          ))}
+          {childArr.map((child, i) => {
+            const index = i;
+            const isHidden =
+              index < currentIndex ||
+              index >= currentIndex + currentVisibleCount;
+
+            return (
+              <div
+                key={index}
+                style={{ flex: `0 0 ${childWidth}px` }}
+                aria-hidden={isHidden}
+              >
+                {child}
+              </div>
+            );
+          })}
         </div>
       </div>
       <CarouselButton onClick={goNext} />
