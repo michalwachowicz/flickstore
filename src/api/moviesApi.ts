@@ -55,7 +55,7 @@ Supported Image Sizes:
 - Logo: w45, w92, w154, w185, w300, w500, original
  */
 const getImageUrl = (path: string, size: string | number = "original") =>
-  `https://image.tmdb.org/t/p/${typeof size === "number" ? `w${size}` : size}/${path}`;
+  `https://image.tmdb.org/t/p/${typeof size === "number" ? `w${size}` : size}${path}`;
 
 const getMoviesByGenre = async (id: number, page: number = 1) =>
   requestData(
