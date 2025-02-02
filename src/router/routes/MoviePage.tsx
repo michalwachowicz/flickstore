@@ -7,9 +7,13 @@ import AddToCartButton from "@/Components/button/AddToCartButton";
 import SectionHeader from "@/Components/SectionHeader";
 import ListItemButton from "@/Components/button/ListItemButton";
 import useFullMovie from "../../hooks/fullMovieHook";
+import useWindowSize from "../../hooks/windowSize";
+import getBackdropWidth from "../../utils/backdropUtils";
 
 const MoviePage = () => {
   const { numId: id, movie, loading } = useFullMovie();
+  const { windowWidth } = useWindowSize();
+  const backdropWidth = getBackdropWidth(windowWidth);
 
   if (loading) return <div>Loading...</div>;
   if (id === -1 || !movie) throw new Error(`No movie found: ${id}`);
@@ -37,7 +41,7 @@ const MoviePage = () => {
                   rel="noopener noreferrer"
                 >
                   <img
-                    src={getImageUrl(backdrop)}
+                    src={getImageUrl(backdrop, backdropWidth)}
                     alt=""
                     className="h-full w-full rounded-lg object-cover"
                   />
@@ -52,7 +56,7 @@ const MoviePage = () => {
               ) : (
                 <img
                   key={backdrop}
-                  src={getImageUrl(backdrop)}
+                  src={getImageUrl(backdrop, backdropWidth)}
                   alt=""
                   className="h-full w-full rounded-lg object-cover"
                 />
@@ -94,9 +98,9 @@ const MoviePage = () => {
                   className="flex flex-col items-center gap-4 text-center"
                 >
                   <img
-                    src={getImageUrl(crew.image!)}
+                    src={getImageUrl(crew.image!, 300)}
                     alt={crew.name}
-                    className="rounded-lg"
+                    className="w-full rounded-lg"
                   />
                   <div>
                     <h3 className="text-lg font-bold text-neutral-200">
