@@ -1,76 +1,18 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Movie } from "../../interfaces/Movie";
-import {
-  addBackdrops,
-  getMovie,
-  isFullMovie,
-  setMovie as setCacheMovie,
-} from "../../managers/moviesManager";
-import {
-  getBackdropImages,
-  getImageUrl,
-  getMovieDetails,
-} from "../../api/moviesApi";
+import { getMovie } from "../../managers/moviesManager";
+import { getImageUrl } from "../../api/moviesApi";
 import { GenreId, getGenre } from "../../managers/genresManager";
 import Carousel from "@/Components/carousel/Carousel";
 import PlayIcon from "@/Assets/images/icons/play.svg?react";
 import AddToCartButton from "@/Components/button/AddToCartButton";
 import SectionHeader from "@/Components/SectionHeader";
 import ListItemButton from "@/Components/button/ListItemButton";
+import useFullMovie from "../../hooks/fullMovieHook";
 
 const MoviePage = () => {
-  const { id } = useParams();
-  const numId = parseInt(id || "-1", 10);
-
-  const [loading, setLoading] = useState(true);
-  const [movie, setMovie] = useState<Movie | null>(null);
-
-  useEffect(() => {
-    const updateMovie = async () => {
-      setLoading(true);
-
-      if (numId === -1) {
-        setMovie(null);
-        setLoading(false);
-        return;
-      }
-
-      if (isFullMovie(numId)) {
-        setMovie(getMovie(numId));
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const movieDetails = await getMovieDetails(numId, {
-          credits: true,
-          images: true,
-          similar: true,
-          videos: true,
-        });
-
-        if (movieDetails.title) {
-          const backdrops = await getBackdropImages(numId);
-
-          setCacheMovie(numId, movieDetails);
-          addBackdrops(numId, backdrops);
-          setMovie(isFullMovie(numId) ? getMovie(numId) : null);
-        } else {
-          setMovie(null);
-        }
-      } catch (err) {
-        setMovie(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    updateMovie();
-  }, [numId]);
+  const { numId: id, movie, loading } = useFullMovie();
 
   if (loading) return <div>Loading...</div>;
-  if (numId === -1 || !movie) throw new Error(`No movie found: ${id}`);
+  if (id === -1 || !movie) throw new Error(`No movie found: ${id}`);
 
   return (
     <div className="wrapper">
@@ -136,7 +78,7 @@ const MoviePage = () => {
           )}
         </div>
         <div className="sm:w-40 sm:flex-grow-0 [&>button]:w-full">
-          <AddToCartButton movieId={numId} />
+          <AddToCartButton movieId={id} />
         </div>
       </div>
       {movie.credits && movie.credits.cast.length > 0 && (
