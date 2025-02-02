@@ -14,8 +14,12 @@ const SearchViewDispatchContext = createContext<Dispatch<ChangeViewAction>>(
 
 const searchViewReducer = (view: ViewType, action: ChangeViewAction) => {
   switch (action.type) {
-    case "switch":
-      return view === "grid" ? "list" : "grid";
+    case "switch": {
+      const newView = view === "grid" ? "list" : "grid";
+      localStorage.setItem("view", newView);
+
+      return newView;
+    }
     default:
       throw new Error(`Unknown action: ${action.type}`);
   }
@@ -30,7 +34,10 @@ export const SearchViewProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [view, dispatch] = useReducer(searchViewReducer, "list");
+  const [view, dispatch] = useReducer(
+    searchViewReducer,
+    (localStorage.getItem("view") as "grid" | "list") || "list",
+  );
 
   return (
     <SearchViewContext.Provider value={view}>
