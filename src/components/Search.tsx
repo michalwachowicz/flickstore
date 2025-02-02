@@ -37,7 +37,7 @@ const Search = ({ onClose = () => {} }: Props) => {
   }, [debouncedQuery]);
 
   return (
-    <div className="fixed inset-x-0 top-0 flex h-screen w-screen items-center justify-center p-6">
+    <div className="fixed inset-x-0 top-0 z-40 flex h-screen w-screen items-center justify-center p-6">
       <div
         data-testid="backdrop"
         className="fixed inset-x-0 top-0 -z-10 h-full w-full bg-neutral-950 opacity-80"

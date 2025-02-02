@@ -19,7 +19,7 @@ const Navbar = ({ isSearchOpen = false, onSearchOpen = () => {} }: Props) => {
   const [cartPopupOpen, setCartPopupOpen] = useState(false);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-10 w-full bg-neutral-950 p-6 shadow-xl">
+    <nav className="fixed inset-x-0 top-0 z-30 w-full bg-neutral-950 p-6 shadow-xl">
       <div className="mx-auto flex max-w-5xl items-center justify-between">
         <Link to="/" className="max-w-36" aria-label="Homepage">
           <Logo className="h-auto w-full" />
