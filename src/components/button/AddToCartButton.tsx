@@ -4,10 +4,15 @@ import CheckIcon from "@/Assets/images/icons/check.svg?react";
 
 interface Props {
   movieId: number;
+  tabIndex?: number;
   onClick?: (event?: React.MouseEvent) => void;
 }
 
-const AddToCartButton = ({ movieId, onClick = () => {} }: Props) => {
+const AddToCartButton = ({
+  movieId,
+  tabIndex = 0,
+  onClick = () => {},
+}: Props) => {
   const cart = useCart();
   const cartDispatch = useCartDispatch();
   const isInCart = cart.includes(movieId);
@@ -22,6 +27,7 @@ const AddToCartButton = ({ movieId, onClick = () => {} }: Props) => {
       type="button"
       className="flex items-center gap-2 rounded-lg bg-amber-400 px-3 py-2 transition-transform ease-in-out hover:scale-105"
       onClick={handleClick}
+      tabIndex={tabIndex}
     >
       {isInCart && (
         <CheckIcon
