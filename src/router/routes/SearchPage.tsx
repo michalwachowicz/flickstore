@@ -56,6 +56,9 @@ const SearchPage = ({ type }: { type: "search" | "genre" }) => {
     };
 
     updateMovies();
+    setTimeout(() => {
+      document.title = `${type === "search" ? `Search "${query}"` : `${getGenre(parseInt(query || "-1", 10) as GenreId)} movies`} | page ${page} | FlickStore`;
+    }, 0);
   }, [page, query, type]);
 
   const handlePageChange = () => {

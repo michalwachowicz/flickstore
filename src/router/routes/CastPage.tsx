@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useFullMovie from "../../hooks/fullMovieHook";
 import { getImageUrl } from "../../api/moviesApi";
@@ -14,6 +15,10 @@ const SectionTitle = ({ title, length }: { title: string; length: number }) => (
 
 const CastPage = () => {
   const { numId: id, movie, loading } = useFullMovie();
+
+  useEffect(() => {
+    document.title = `${movie?.title ? `Cast | ${movie?.title}` : "Loading..."} | FlickStore`;
+  }, [movie?.title]);
 
   if (loading) return <LoadingScreen />;
   if (id === -1 || !movie) throw new Error(`No movie found: ${id}`);

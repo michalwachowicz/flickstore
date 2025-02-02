@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { getMovie } from "../../managers/moviesManager";
 import { getImageUrl } from "../../api/moviesApi";
 import { GenreId, getGenre } from "../../managers/genresManager";
@@ -15,6 +16,10 @@ const MoviePage = () => {
   const { numId: id, movie, loading } = useFullMovie();
   const { windowWidth } = useWindowSize();
   const backdropWidth = getBackdropWidth(windowWidth);
+
+  useEffect(() => {
+    document.title = `${movie?.title || "Loading..."} | FlickStore`;
+  }, [movie?.title]);
 
   if (loading) return <LoadingScreen />;
   if (id === -1 || !movie) throw new Error(`No movie found: ${id}`);

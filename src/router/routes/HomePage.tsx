@@ -78,6 +78,10 @@ const HomePage = () => {
     };
   }, [sections, loading]);
 
+  useEffect(() => {
+    document.title = "Home | FlickStore";
+  }, []);
+
   return (
     <div>
       <Hero movies={popularMovies} />

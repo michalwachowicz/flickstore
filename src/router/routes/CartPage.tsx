@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart, useCartDispatch } from "../../contexts/CartContext";
 import IconButton from "@/Components/button/IconButton";
@@ -17,6 +18,10 @@ const CartPage = () => {
   const totalStr = total.toFixed(2);
   const vat = (total * 0.23).toFixed(2);
   const subtotal = (total - parseFloat(vat)).toFixed(2);
+
+  useEffect(() => {
+    document.title = "Cart | FlickStore";
+  }, []);
 
   return (
     <main className="wrapper">
