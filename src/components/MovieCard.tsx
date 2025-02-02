@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { getMovie } from "../managers/moviesManager";
 import { getImageUrl } from "../api/moviesApi";
 import AddToCartButton from "@/Components/button/AddToCartButton";
+import useParentVisibility from "../hooks/parentVisibilityHook";
 
 interface Props {
   movieId: number;
@@ -11,6 +12,9 @@ interface Props {
 
 const MovieCard = ({ movieId, image }: Props) => {
   const movie = getMovie(movieId);
+  const linkRef = useRef<HTMLAnchorElement>(null);
+  const hidden = useParentVisibility(linkRef.current || null);
+
   if (!movie) return null;
 
   const img =
@@ -27,8 +31,10 @@ const MovieCard = ({ movieId, image }: Props) => {
 
   return (
     <Link
+      ref={linkRef}
       to={`/movie/${movieId}`}
       className="flex h-full flex-col rounded-lg bg-neutral-800 shadow"
+      tabIndex={hidden ? -1 : 0}
     >
       <img
         src={getImageUrl(img, image === "backdrop" ? 780 : 342)}
@@ -38,7 +44,11 @@ const MovieCard = ({ movieId, image }: Props) => {
       />
       <div className="flex flex-1 flex-col justify-between gap-4 px-3 py-6">
         <div className="text-lg font-bold text-neutral-50">{movie.title}</div>
-        <AddToCartButton movieId={movieId} onClick={handleAddToCartClick} />
+        <AddToCartButton
+          movieId={movieId}
+          onClick={handleAddToCartClick}
+          tabIndex={hidden ? -1 : 0}
+        />
       </div>
     </Link>
   );
